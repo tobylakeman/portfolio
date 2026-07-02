@@ -84,6 +84,144 @@
     el.innerHTML = ICONS[el.dataset.icon] || "";
   });
 
+  /* Custom cursor */
+  const isTouch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+  if (!isTouch && !prefersReducedMotion) {
+    const dot = document.querySelector(".cursor-dot");
+    const ring = document.querySelector(".cursor-ring");
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+    window.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+    });
+
+    (function animateRing() {
+      ringX += (mouseX - ringX) * 0.16;
+      ringY += (mouseY - ringY) * 0.16;
+      ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+      requestAnimationFrame(animateRing);
+    })();
+
+    document.querySelectorAll("a, button, .work-card").forEach((el) => {
+      el.addEventListener("mouseenter", () => ring.classList.add("is-active"));
+      el.addEventListener("mouseleave", () => ring.classList.remove("is-active"));
+    });
+  }
+
+  /* Count-up stats */
+  const statEls = document.querySelectorAll(".stat .n");
+  if (statEls.length && "IntersectionObserver" in window) {
+    const parseTarget = (text) => {
+      const match = text.match(/[\d.]+/);
+      return match ? parseFloat(match[0]) : null;
+    };
+    const countIo = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const original = el.textContent.trim();
+        const target = parseTarget(original);
+        countIo.unobserve(el);
+        if (prefersReducedMotion || target === null) return;
+        const suffix = original.replace(/^[\d.]+/, "");
+        const duration = 1200;
+        const start = performance.now();
+        const tick = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(target * eased) + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+          else el.textContent = original;
+        };
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.4 });
+    statEls.forEach((el) => countIo.observe(el));
+  }
+
+  /* Scroll-spy nav highlighting */
+  const navLinks = document.querySelectorAll(".nav-links a");
+  const spySections = Array.from(navLinks)
+    .map((link) => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
+  if (spySections.length && "IntersectionObserver" in window) {
+    const spyIo = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = "#" + entry.target.id;
+        navLinks.forEach((link) => link.classList.toggle("active", link.getAttribute("href") === id));
+      });
+    }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
+    spySections.forEach((section) => spyIo.observe(section));
+  }
+
+  /* Parallax hero background on scroll */
+  const heroBgs = document.querySelectorAll(".hero-bg");
+  if (heroBgs.length && !prefersReducedMotion) {
+    window.addEventListener("scroll", () => {
+      const y = window.scrollY;
+      heroBgs.forEach((bg) => {
+        bg.style.transform = `translateY(${y * 0.15}px)`;
+      });
+    }, { passive: true });
+  }
+
+  /* Magnetic buttons — listener stays on the static .btn hitbox; transform
+     applies to the inner span so the hitbox never moves under the cursor
+     (moving the listened-to element itself causes a mouseleave/mouseenter
+     feedback loop that snaps the transform back to empty). */
+  if (!isTouch && !prefersReducedMotion) {
+    document.querySelectorAll(".btn").forEach((btn) => {
+      const inner = btn.querySelector(".btn-inner");
+      btn.addEventListener("mousemove", (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        inner.style.transform = `translate(${x * 0.25}px, ${y * 0.35}px)`;
+      });
+      btn.addEventListener("mouseleave", () => { inner.style.transform = ""; });
+    });
+  }
+
+  /* 3D tilt on work cards — same fix: listener on the static .work-card,
+     transform applied to .work-card-inner. */
+  if (!isTouch && !prefersReducedMotion) {
+    document.querySelectorAll(".work-card").forEach((card) => {
+      const inner = card.querySelector(".work-card-inner");
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        inner.style.transform = `rotateX(${-py * 8}deg) rotateY(${px * 8}deg) translateY(-4px)`;
+      });
+      card.addEventListener("mouseleave", () => { inner.style.transform = ""; });
+    });
+  }
+
+  /* Drag-to-scroll on reel tracks */
+  document.querySelectorAll(".reel-track").forEach((track) => {
+    let isDown = false, startX = 0, startScroll = 0, moved = false;
+    track.addEventListener("pointerdown", (e) => {
+      isDown = true; moved = false;
+      startX = e.clientX; startScroll = track.scrollLeft;
+      track.classList.add("is-dragging");
+      track.setPointerCapture(e.pointerId);
+    });
+    track.addEventListener("pointermove", (e) => {
+      if (!isDown) return;
+      const delta = e.clientX - startX;
+      if (Math.abs(delta) > 4) moved = true;
+      track.scrollLeft = startScroll - delta;
+    });
+    const endDrag = () => { isDown = false; track.classList.remove("is-dragging"); };
+    track.addEventListener("pointerup", endDrag);
+    track.addEventListener("pointercancel", endDrag);
+    track.addEventListener("click", (e) => {
+      if (moved) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+  });
+
   /* Work lightbox */
   const lightbox = document.getElementById("lightbox");
   const lightboxClose = document.getElementById("lightboxClose");

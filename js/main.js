@@ -152,22 +152,6 @@
     statEls.forEach((el) => countIo.observe(el));
   }
 
-  /* Scroll-spy nav highlighting */
-  const navLinks = document.querySelectorAll(".nav-links a");
-  const spySections = Array.from(navLinks)
-    .map((link) => document.querySelector(link.getAttribute("href")))
-    .filter(Boolean);
-  if (spySections.length && "IntersectionObserver" in window) {
-    const spyIo = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const id = "#" + entry.target.id;
-        navLinks.forEach((link) => link.classList.toggle("active", link.getAttribute("href") === id));
-      });
-    }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
-    spySections.forEach((section) => spyIo.observe(section));
-  }
-
   /* Hero art "shatter" — slices the hero artwork into a grid of tiles
      sharing one background image/position, so it reconstructs perfectly
      when at rest. On pointer move within the hero, tiles translate away
@@ -307,36 +291,88 @@
     }, true);
   });
 
-  /* Work lightbox */
+  /* Work lightbox — only wired up on pages that ship the markup (work.html) */
   const lightbox = document.getElementById("lightbox");
-  const lightboxClose = document.getElementById("lightboxClose");
-  const lightboxNum = document.getElementById("lightboxNum");
-  const lightboxTag = document.getElementById("lightboxTag");
-  const lightboxTitle = document.getElementById("lightboxTitle");
-  const lightboxClient = document.getElementById("lightboxClient");
-  const lightboxDesc = document.getElementById("lightboxDesc");
+  if (lightbox) {
+    const lightboxClose = document.getElementById("lightboxClose");
+    const lightboxNum = document.getElementById("lightboxNum");
+    const lightboxTag = document.getElementById("lightboxTag");
+    const lightboxTitle = document.getElementById("lightboxTitle");
+    const lightboxClient = document.getElementById("lightboxClient");
+    const lightboxDesc = document.getElementById("lightboxDesc");
 
-  function openLightbox(card) {
-    const num = card.querySelector(".ph-num")?.textContent || "";
-    lightboxNum.textContent = num;
-    lightboxTag.textContent = card.dataset.tag || "";
-    lightboxTitle.textContent = card.dataset.title || "";
-    lightboxClient.innerHTML = card.dataset.client ? `Client &nbsp;&middot;&nbsp; <strong>${card.dataset.client}</strong>` : "";
-    lightboxDesc.textContent = card.dataset.description || "";
-    document.body.classList.add("lb-open");
-  }
-  function closeLightbox() {
-    document.body.classList.remove("lb-open");
+    const openLightbox = (card) => {
+      const num = card.querySelector(".ph-num")?.textContent || "";
+      lightboxNum.textContent = num;
+      lightboxTag.textContent = card.dataset.tag || "";
+      lightboxTitle.textContent = card.dataset.title || "";
+      lightboxClient.innerHTML = card.dataset.client ? `Client &nbsp;&middot;&nbsp; <strong>${card.dataset.client}</strong>` : "";
+      lightboxDesc.textContent = card.dataset.description || "";
+      document.body.classList.add("lb-open");
+    };
+    const closeLightbox = () => document.body.classList.remove("lb-open");
+
+    document.querySelectorAll(".work-card[data-title]").forEach((card) => {
+      card.addEventListener("click", () => openLightbox(card));
+    });
+    lightboxClose.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLightbox();
+    });
   }
 
-  document.querySelectorAll(".work-card").forEach((card) => {
-    card.addEventListener("click", () => openLightbox(card));
+  /* Accordions — capabilities list & FAQ share the same .acc-item markup.
+     Panels animate via max-height (computed from content), and any panel
+     carrying a [data-video-embed] host lazy-loads its iframe on first open
+     so pages with several accordion rows don't fetch every embed upfront. */
+  const setAccItemOpen = (item, open) => {
+    const panel = item.querySelector(".acc-panel");
+    const panelInner = item.querySelector(".acc-panel-inner");
+    if (!panel || !panelInner) return;
+    item.classList.toggle("is-open", open);
+    if (open) {
+      const videoHost = item.querySelector(".acc-video[data-video-embed]");
+      if (videoHost && !videoHost.dataset.loaded) {
+        const frame = videoHost.querySelector(".video-frame");
+        const iframe = document.createElement("iframe");
+        iframe.src = videoHost.dataset.videoEmbed;
+        iframe.title = item.querySelector(".acc-trigger")?.textContent.trim() || "Video";
+        iframe.loading = "lazy";
+        iframe.allow = "accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen";
+        iframe.allowFullscreen = true;
+        frame.appendChild(iframe);
+        videoHost.dataset.loaded = "true";
+      }
+      panel.style.maxHeight = panelInner.scrollHeight + "px";
+    } else {
+      panel.style.maxHeight = "0px";
+    }
+  };
+
+  document.querySelectorAll(".acc-item").forEach((item) => {
+    const trigger = item.querySelector(".acc-trigger");
+    if (!trigger) return;
+    if (item.classList.contains("is-open")) setAccItemOpen(item, true);
+    trigger.addEventListener("click", () => {
+      const willOpen = !item.classList.contains("is-open");
+      const list = item.closest(".accordion-list");
+      if (list) {
+        list.querySelectorAll(".acc-item.is-open").forEach((openItem) => {
+          if (openItem !== item) setAccItemOpen(openItem, false);
+        });
+      }
+      setAccItemOpen(item, willOpen);
+    });
   });
-  lightboxClose.addEventListener("click", closeLightbox);
-  lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) closeLightbox();
-  });
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeLightbox();
+
+  window.addEventListener("resize", () => {
+    document.querySelectorAll(".acc-item.is-open").forEach((item) => {
+      const panel = item.querySelector(".acc-panel");
+      const panelInner = item.querySelector(".acc-panel-inner");
+      if (panel && panelInner) panel.style.maxHeight = panelInner.scrollHeight + "px";
+    });
   });
 })();

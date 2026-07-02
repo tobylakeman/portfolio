@@ -98,7 +98,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -136,48 +136,52 @@
 
   <!-- ============== HERO / VIDEO ============== -->
   <header class="hero" id="top">
+    <!--
+      Hero artwork "draw card": drop the real illustration in as
+      assets/hero-art.jpg (or .png) and it appears automatically — no
+      code change needed. Until then this shows a bold placeholder card
+      instead of a broken image.
+    -->
     <div class="hero-bg" aria-hidden="true">
-      <svg class="hero-rings" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice">
-        <g class="ring-group ring-group--a">
-          <circle cx="400" cy="400" r="180" />
-          <circle cx="400" cy="400" r="220" />
-          <circle cx="400" cy="400" r="260" />
-          <circle cx="400" cy="400" r="300" />
-        </g>
-        <g class="ring-group ring-group--b">
-          <circle cx="620" cy="180" r="90" />
-          <circle cx="620" cy="180" r="120" />
-          <circle cx="620" cy="180" r="150" />
-        </g>
-      </svg>
       <div class="hero-blob hero-blob--a"></div>
       <div class="hero-blob hero-blob--b"></div>
-      <div class="hero-blob hero-blob--c"></div>
     </div>
 
     <div class="wrap hero-inner">
-      <span class="eyebrow reveal">Newcastle, NSW · Available now</span>
-      <h1 class="hero-name reveal">
-        <span class="row">Toby</span>
-        <span class="row accent-text">Lakeman</span>
-      </h1>
-      <p class="hero-tag reveal">Multimedia Designer<span class="sep">/</span>Content Creator</p>
+      <div class="hero-text">
+        <span class="eyebrow reveal">Newcastle, NSW · Available now</span>
+        <h1 class="hero-name reveal">
+          <span class="row">Toby</span>
+          <span class="row accent-text">Lakeman</span>
+        </h1>
+        <p class="hero-tag reveal">Multimedia Designer<span class="sep">/</span>Content Creator</p>
 
-      <div class="hero-video reveal" aria-label="Hero showreel">
-        <div class="video-frame">
-          <iframe
-            src="https://player.vimeo.com/video/1193504191?title=0&byline=0&portrait=0"
-            title="Toby Lakeman hero showreel"
-            allow="fullscreen; autoplay; encrypted-media"
-            allowfullscreen></iframe>
+        <div class="hero-video reveal" aria-label="Hero showreel">
+          <div class="video-frame">
+            <iframe
+              src="https://player.vimeo.com/video/1193504191?title=0&byline=0&portrait=0"
+              title="Toby Lakeman hero showreel"
+              allow="fullscreen; autoplay; encrypted-media"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <p class="hero-quote reveal">25 years of experience in <em>graphic design, motion design, video editing,</em> photography and branding. Crafting <em>powerful visual stories</em> for brands that want to <em>lead the way.</em></p>
+
+        <div class="hero-actions reveal">
+          <a class="btn" href="#vimeo"><span class="btn-inner">Watch showreel <span class="arr">→</span></span></a>
+          <a class="btn btn--ghost" href="#work"><span class="btn-inner">See work <span class="arr">→</span></span></a>
         </div>
       </div>
 
-      <p class="hero-quote reveal">25 years of experience in <em>graphic design, motion design, video editing,</em> photography and branding. Crafting <em>powerful visual stories</em> for brands that want to <em>lead the way.</em></p>
-
-      <div class="hero-actions reveal">
-        <a class="btn" href="#vimeo"><span class="btn-inner">Watch showreel <span class="arr">→</span></span></a>
-        <a class="btn btn--ghost" href="#work"><span class="btn-inner">See work <span class="arr">→</span></span></a>
+      <!--
+        Hero artwork "draw card": drop the real illustration in as
+        assets/hero-art.jpg (or .png) and it appears automatically — no
+        code change needed. Until then this shows a bold placeholder
+        card instead of a broken image. Splits apart on hover.
+      -->
+      <div class="hero-art-card reveal">
+        <div class="hero-art-shatter" data-shatter data-art-url="assets/hero-art.jpg"></div>
       </div>
     </div>
 
@@ -188,6 +192,16 @@
       <div class="stat"><div class="n">&infin;</div><div class="l">Stories<br>told</div></div>
     </div>
   </header>
+
+  <!-- Grunge divider: spray-scatter + torn edge, draws in on scroll -->
+  <div class="grunge-divider" data-grunge aria-hidden="true">
+    <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+      <path class="grunge-tear" d="M0,30 L40,22 L80,36 L130,18 L180,32 L230,14 L290,30 L340,20 L400,34 L460,16 L520,28 L580,20 L640,34 L700,18 L760,30 L820,16 L880,32 L940,20 L1000,30 L1060,18 L1120,32 L1200,22" />
+    </svg>
+    <span class="grunge-dot d1"></span><span class="grunge-dot d2"></span>
+    <span class="grunge-dot d3"></span><span class="grunge-dot d4"></span>
+    <span class="grunge-dot d5"></span><span class="grunge-dot d6"></span>
+  </div>
 
   <!-- ============== SELECTED WORK ============== -->
   <section class="work" id="work">
@@ -372,6 +386,14 @@ The 2024 program was designed to match the energy of the show itself. Bold displ
       </div>
     </div>
   </section>
+
+  <div class="grunge-divider" data-grunge aria-hidden="true">
+    <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+      <path class="grunge-tear" d="M0,24 L50,34 L100,16 L150,32 L210,20 L260,36 L320,18 L380,30 L440,16 L500,34 L560,20 L620,32 L680,18 L740,30 L800,16 L860,34 L920,20 L980,32 L1040,18 L1100,28 L1200,20" />
+    </svg>
+    <span class="grunge-dot d1"></span><span class="grunge-dot d2"></span>
+    <span class="grunge-dot d3"></span><span class="grunge-dot d4"></span>
+  </div>
 
   <!-- ============== ABOUT ============== -->
   <section class="about-block" id="about">

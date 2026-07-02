@@ -167,6 +167,90 @@
     }, { passive: true });
   }
 
+  /* Hero art "shatter" — slices the hero artwork into a grid of tiles
+     sharing one background image/position, so it reconstructs perfectly
+     when at rest. On pointer move within the hero, tiles translate away
+     from the image's center, scaled by how far the cursor is from
+     center — the image visually cracks apart, then springs back on
+     mouseleave. Falls back to a single static image on touch devices
+     and when reduced motion is requested. */
+  (function initHeroShatter() {
+    const container = document.querySelector("[data-shatter]");
+    if (!container) return;
+    const artUrl = container.dataset.artUrl;
+    const cols = 6, rows = 4;
+
+    if (isTouch || prefersReducedMotion) {
+      container.style.backgroundImage = `url(${artUrl})`;
+      container.style.backgroundSize = "cover";
+      container.style.backgroundPosition = "center";
+      return;
+    }
+
+    const tiles = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const tile = document.createElement("div");
+        tile.className = "shatter-tile";
+        const w = 100 / cols, h = 100 / rows;
+        tile.style.left = `${c * w}%`;
+        tile.style.top = `${r * h}%`;
+        tile.style.width = `${w}%`;
+        tile.style.height = `${h}%`;
+        tile.style.backgroundImage = `url(${artUrl})`;
+        tile.style.backgroundSize = `${cols * 100}% ${rows * 100}%`;
+        tile.style.backgroundPosition = `${(c / (cols - 1)) * 100}% ${(r / (rows - 1)) * 100}%`;
+        // Direction each tile drifts, relative to the grid's center.
+        const dirX = (c + 0.5) / cols - 0.5;
+        const dirY = (r + 0.5) / rows - 0.5;
+        tile.dataset.dirX = dirX;
+        tile.dataset.dirY = dirY;
+        container.appendChild(tile);
+        tiles.push(tile);
+      }
+    }
+
+    const card = container.closest(".hero-art-card");
+    const maxShatterPx = 46;
+
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      const magnitude = Math.min(Math.sqrt(px * px + py * py) * 2, 1);
+      tiles.forEach((tile) => {
+        const dirX = parseFloat(tile.dataset.dirX);
+        const dirY = parseFloat(tile.dataset.dirY);
+        const tx = dirX * magnitude * maxShatterPx;
+        const ty = dirY * magnitude * maxShatterPx;
+        const rot = dirX * magnitude * 5;
+        tile.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
+      });
+    });
+
+    card.addEventListener("mouseleave", () => {
+      tiles.forEach((tile) => { tile.style.transform = ""; });
+    });
+  })();
+
+  /* Grunge dividers — draw in (stroke + spray dots) once scrolled into view */
+  const grungeDividers = document.querySelectorAll("[data-grunge]");
+  if (grungeDividers.length) {
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      grungeDividers.forEach((el) => el.classList.add("in"));
+    } else {
+      const grungeIo = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in");
+            grungeIo.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      grungeDividers.forEach((el) => grungeIo.observe(el));
+    }
+  }
+
   /* Magnetic buttons — listener stays on the static .btn hitbox; transform
      applies to the inner span so the hitbox never moves under the cursor
      (moving the listened-to element itself causes a mouseleave/mouseenter

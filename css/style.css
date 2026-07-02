@@ -6,10 +6,15 @@
   --muted-fg: #9db3b0;
   --accent: #0addd3;
   --accent-2: #0b8f89;
+  --grape: #8b2ff0;
+  --hot-pink: #ff2e94;
   --border: #1c2827;
   --card: #0d1615;
 
-  --font-display: "Sora", sans-serif;
+  --gradient-brand: linear-gradient(135deg, var(--accent) 0%, var(--grape) 55%, var(--hot-pink) 100%);
+
+  --font-display: "Anton", sans-serif;
+  --font-alt: "Archivo Black", sans-serif;
   --font-body: "Inter", sans-serif;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -44,7 +49,12 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.05; letter-spacing
 section { position: relative; padding: 110px 0; scroll-margin-top: 90px; }
 @media (max-width: 640px) { section { padding: 72px 0; } }
 
-.accent-text { color: var(--accent); }
+.accent-text {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 .skip-link {
   position: absolute; left: -9999px; top: 0;
@@ -125,14 +135,13 @@ a, button, .work-card { cursor: pointer; }
 
 .hero-blob {
   position: absolute;
-  filter: blur(60px);
-  opacity: 0.55;
-  background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-2) 70%);
+  filter: blur(70px);
+  opacity: 0.5;
+  background: var(--gradient-brand);
   animation: blob-morph 16s ease-in-out infinite, blob-float 22s ease-in-out infinite;
 }
-.hero-blob--a { width: 420px; height: 420px; top: -10%; left: -8%; animation-delay: 0s, 0s; }
-.hero-blob--b { width: 320px; height: 320px; top: 30%; right: -6%; opacity: 0.4; animation-delay: -5s, -8s; }
-.hero-blob--c { width: 260px; height: 260px; bottom: -12%; left: 30%; opacity: 0.35; animation-delay: -10s, -3s; }
+.hero-blob--a { width: 460px; height: 460px; top: -14%; left: -10%; animation-delay: 0s, 0s; }
+.hero-blob--b { width: 360px; height: 360px; bottom: -16%; right: -8%; opacity: 0.4; animation-delay: -5s, -8s; }
 
 @keyframes blob-morph {
   0%, 100% { border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%; }
@@ -144,25 +153,51 @@ a, button, .work-card { cursor: pointer; }
   50% { transform: translate(30px, -20px) scale(1.08); }
 }
 
-.hero-rings {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  opacity: 0.16;
-  animation: rings-rotate 90s linear infinite;
+/* Hero art "shatter" — a grid of tiles sharing one background image.
+   On pointer move they translate outward from center (scaled by cursor
+   distance from the hero's center), cracking the image apart; they
+   spring back together on mouseleave. Works on the placeholder gradient
+   today and will apply to the real artwork the moment it's dropped in. */
+.hero-art-shatter {
+  position: absolute; inset: 0;
+  background: var(--gradient-brand);
+  overflow: hidden;
 }
-.ring-group circle { fill: none; stroke: var(--fg); stroke-width: 1.5; }
-.ring-group--b circle { stroke: var(--accent); }
-@keyframes rings-rotate {
-  from { transform: rotate(0deg); transform-origin: 400px 400px; }
-  to { transform: rotate(360deg); transform-origin: 400px 400px; }
+.shatter-tile {
+  position: absolute;
+  background-repeat: no-repeat;
+  transition: transform 550ms var(--ease-out);
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-blob, .hero-rings { animation: none; }
+  .hero-blob { animation: none; }
+  .shatter-tile { transition: none; }
 }
 
 /* ---------- Hero ---------- */
 .hero { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; padding-top: 140px; padding-bottom: 60px; }
-.hero-inner { position: relative; z-index: 1; max-width: 880px; }
+.hero-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1.2fr 0.9fr; gap: 56px;
+  align-items: center;
+}
+.hero-text { max-width: 620px; }
+
+.hero-art-card {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 22px;
+  border: 3px solid var(--fg);
+  overflow: hidden;
+  transform: rotate(-2deg);
+  box-shadow: 0 40px 80px -24px rgba(139, 47, 240, 0.45);
+}
+
+@media (max-width: 980px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-art-card { max-width: 420px; margin: 0 auto; order: -1; transform: rotate(-1deg); }
+}
 
 .eyebrow {
   display: inline-block; font-size: 13px; font-weight: 600; text-transform: uppercase;
@@ -385,6 +420,51 @@ body.lb-open .lightbox { display: block; }
 .lightbox-client { color: var(--muted-fg); font-size: 14px; margin-bottom: 20px; }
 .lightbox-client strong { color: var(--fg); }
 .lightbox-desc { color: var(--muted-fg); font-size: 16px; white-space: pre-line; line-height: 1.7; }
+
+/* ---------- Grunge divider ---------- */
+/* Spray-scatter + torn-edge line between sections. The path "draws"
+   itself in (stroke-dashoffset) and the spray dots fade/scale in as it
+   scrolls into view — an original graphic, not traced from any source. */
+.grunge-divider {
+  position: relative;
+  height: 60px;
+  margin: -1px 0;
+  background: var(--bg-alt);
+  overflow: visible;
+}
+.grunge-divider svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.grunge-tear {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1600;
+  stroke-dashoffset: 1600;
+  opacity: 0.7;
+  transition: stroke-dashoffset 1100ms var(--ease-out);
+}
+.grunge-divider.in .grunge-tear { stroke-dashoffset: 0; }
+
+.grunge-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gradient-brand);
+  opacity: 0;
+  transform: scale(0.3);
+  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+}
+.grunge-divider.in .grunge-dot { opacity: 0.8; transform: scale(1); }
+.d1 { width: 10px; height: 10px; top: 8px; left: 6%; transition-delay: 100ms; }
+.d2 { width: 5px; height: 5px; top: 40px; left: 14%; transition-delay: 220ms; }
+.d3 { width: 7px; height: 7px; top: 14px; left: 62%; transition-delay: 160ms; }
+.d4 { width: 12px; height: 12px; top: 34px; left: 78%; transition-delay: 300ms; }
+.d5 { width: 6px; height: 6px; top: 10px; left: 88%; transition-delay: 380ms; }
+.d6 { width: 4px; height: 4px; top: 44px; left: 40%; transition-delay: 260ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .grunge-tear { transition: none; stroke-dashoffset: 0; }
+  .grunge-dot { transition: none; opacity: 0.8; transform: scale(1); }
+}
 
 /* ---------- Scroll reveal ---------- */
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity 650ms var(--ease-out), transform 650ms var(--ease-out); }

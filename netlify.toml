@@ -1,0 +1,36 @@
+# Netlify configuration for Octobia Media / Toby Lakeman portfolio
+
+[build]
+  publish = "."
+
+# Force HTTPS + redirect the Netlify subdomain and the www host to the canonical apex domain
+[[redirects]]
+  from = "https://www.octobiamedia.com.au/*"
+  to = "https://octobiamedia.com.au/:splat"
+  status = 301
+  force = true
+
+# Long-cache static assets (images, fonts, css, js) — Google rewards fast repeat loads
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# Security + best-practice headers (counts toward Lighthouse / Core Web Vitals)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"

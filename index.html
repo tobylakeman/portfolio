@@ -3,37 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Toby Lakeman — Multimedia Designer</title>
-<meta name="description" content="Toby Lakeman — Multimedia Designer specialising in motion graphics, brand identity and digital design.">
+<title>Toby Lakeman — Multimedia Designer &amp; Content Creator | Newcastle, NSW</title>
+<meta name="description" content="Toby Lakeman, Multimedia Designer &amp; Content Creator based in Newcastle, NSW. 25 years across graphic design, motion design, video editing, photography and branding.">
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<div class="grain"></div>
-<div class="cursor-dot"></div>
-<div class="cursor-ring"></div>
-
+<div class="grain" aria-hidden="true"></div>
 <a class="skip-link" href="#main">Skip to content</a>
 
-<header class="site-header" data-reveal-header>
-  <a href="#top" class="logo">TL<span class="logo-dot">.</span></a>
-  <nav class="nav" aria-label="Primary">
+<nav class="nav" id="nav">
+  <a href="#top" class="brand">Toby Lakeman<span class="dot">.</span></a>
+  <div class="nav-links">
     <a href="#work">Work</a>
+    <a href="#vimeo">Vimeo</a>
+    <a href="#youtube">YouTube</a>
     <a href="#about">About</a>
     <a href="#experience">Experience</a>
     <a href="#contact">Contact</a>
-  </nav>
+  </div>
   <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
-</header>
+</nav>
 
 <div class="mobile-nav" id="mobileNav">
   <a href="#work">Work</a>
+  <a href="#vimeo">Vimeo</a>
+  <a href="#youtube">YouTube</a>
   <a href="#about">About</a>
   <a href="#experience">Experience</a>
   <a href="#contact">Contact</a>
@@ -41,185 +42,514 @@
 
 <main id="main">
 
-  <section class="hero" id="top">
-    <div class="hero-watermark" data-parallax>DESIGN</div>
-    <div class="hero-content">
-      <p class="hero-eyebrow reveal">Multimedia Designer — Based in NSW, Australia</p>
-      <h1 class="hero-title" data-scramble="TOBY LAKEMAN">TOBY LAKEMAN</h1>
-      <p class="hero-sub reveal">I build motion, brands and digital experiences<br>that refuse to sit quietly in the background.</p>
-      <a href="#work" class="btn-magnetic reveal">
-        <span>See the work</span>
-      </a>
+  <!-- ============== HERO / VIDEO ============== -->
+  <header class="hero" id="top">
+    <div class="hero-bg" aria-hidden="true">
+      <svg class="hero-rings" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice">
+        <g class="ring-group ring-group--a">
+          <circle cx="400" cy="400" r="180" />
+          <circle cx="400" cy="400" r="220" />
+          <circle cx="400" cy="400" r="260" />
+          <circle cx="400" cy="400" r="300" />
+        </g>
+        <g class="ring-group ring-group--b">
+          <circle cx="620" cy="180" r="90" />
+          <circle cx="620" cy="180" r="120" />
+          <circle cx="620" cy="180" r="150" />
+        </g>
+      </svg>
+      <div class="hero-blob hero-blob--a"></div>
+      <div class="hero-blob hero-blob--b"></div>
+      <div class="hero-blob hero-blob--c"></div>
     </div>
-    <div class="scroll-cue" aria-hidden="true">
-      <span>Scroll</span>
-      <div class="scroll-cue-line"></div>
-    </div>
-  </section>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>MOTION GRAPHICS</span><span class="dot">✦</span>
-      <span>BRAND IDENTITY</span><span class="dot">✦</span>
-      <span>DIGITAL DESIGN</span><span class="dot">✦</span>
-      <span>VIDEO EDITING</span><span class="dot">✦</span>
-      <span>ART DIRECTION</span><span class="dot">✦</span>
-      <span>MOTION GRAPHICS</span><span class="dot">✦</span>
-      <span>BRAND IDENTITY</span><span class="dot">✦</span>
-      <span>DIGITAL DESIGN</span><span class="dot">✦</span>
-      <span>VIDEO EDITING</span><span class="dot">✦</span>
-      <span>ART DIRECTION</span><span class="dot">✦</span>
-    </div>
-  </div>
+    <div class="wrap hero-inner">
+      <span class="eyebrow reveal">Newcastle, NSW · Available now</span>
+      <h1 class="hero-name reveal">
+        <span class="row">Toby</span>
+        <span class="row accent-text">Lakeman</span>
+      </h1>
+      <p class="hero-tag reveal">Multimedia Designer<span class="sep">/</span>Content Creator</p>
 
-  <!--
-    WORK: swap these placeholder cards for real case studies —
-    title, category, year, cover image/video and a project link.
-  -->
+      <div class="hero-video reveal" aria-label="Hero showreel">
+        <div class="video-frame">
+          <iframe
+            src="https://player.vimeo.com/video/1193504191?title=0&byline=0&portrait=0"
+            title="Toby Lakeman hero showreel"
+            allow="fullscreen; autoplay; encrypted-media"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <p class="hero-quote reveal">25 years of experience in <em>graphic design, motion design, video editing,</em> photography and branding. Crafting <em>powerful visual stories</em> for brands that want to <em>lead the way.</em></p>
+
+      <div class="hero-actions reveal">
+        <a class="btn" href="#vimeo">Watch showreel <span class="arr">→</span></a>
+        <a class="btn btn--ghost" href="#work">See work <span class="arr">→</span></a>
+      </div>
+    </div>
+
+    <div class="stats wrap">
+      <div class="stat"><div class="n">25</div><div class="l">Years<br>in industry</div></div>
+      <div class="stat"><div class="n">8</div><div class="l">Multi-disciplinary<br>roles</div></div>
+      <div class="stat"><div class="n">50+</div><div class="l">Brands<br>brought to life</div></div>
+      <div class="stat"><div class="n">&infin;</div><div class="l">Stories<br>told</div></div>
+    </div>
+  </header>
+
+  <!-- ============== SELECTED WORK ============== -->
   <section class="work" id="work">
-    <div class="section-head reveal">
-      <span class="section-num">01</span>
-      <h2>Selected Work</h2>
-      <a href="https://www.behance.net/tobylakeman/moodboards" target="_blank" rel="noopener" class="section-link">Full archive on Behance ↗</a>
-    </div>
-
-    <div class="work-grid">
-      <article class="work-card reveal">
-        <div class="work-card-media" aria-hidden="true"><span>01</span></div>
-        <div class="work-card-body">
-          <h3>Project One</h3>
-          <p class="work-tags">Motion Graphics — Brand Reel</p>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">Selected Work</span>
+          <h2 class="section-title reveal">Print<br>portfolio.</h2>
         </div>
-      </article>
+        <p class="section-lead reveal">Logos, branding systems, brochures, programs and packaging. Click any piece for the full story.</p>
+      </div>
 
-      <article class="work-card reveal">
-        <div class="work-card-media" aria-hidden="true"><span>02</span></div>
-        <div class="work-card-body">
-          <h3>Project Two</h3>
-          <p class="work-tags">Brand Identity — Visual System</p>
-        </div>
-      </article>
+      <div class="work-grid">
 
-      <article class="work-card reveal">
-        <div class="work-card-media" aria-hidden="true"><span>03</span></div>
-        <div class="work-card-body">
-          <h3>Project Three</h3>
-          <p class="work-tags">Event Campaign — Digital + Print</p>
-        </div>
-      </article>
+        <article class="work-card span-8 reveal" data-client="Kings of Neon" data-title="Kings of Neon, Catalogue" data-tag="Catalogue Design · Print · Branding · 2026" data-description="A 2026 product and storytelling catalogue for Kings of Neon. Layout, typography and image direction across covers, case studies, profile spreads and a global reach map.">
+          <div class="thumb placeholder"><span class="ph-num">01</span></div>
+          <div class="cap"><p class="t">Kings of Neon, 2026 Catalogue</p><p class="k">Catalogue · Branding</p></div>
+        </article>
 
-      <article class="work-card reveal">
-        <div class="work-card-media" aria-hidden="true"><span>04</span></div>
-        <div class="work-card-body">
-          <h3>Project Four</h3>
-          <p class="work-tags">Web Design — Interactive</p>
-        </div>
-      </article>
+        <article class="work-card span-4 reveal" data-client="Kings of Neon" data-title="Kings of Neon, Brand Booklet" data-tag="Brand System · Print · 2025" data-description="The 2025 brand booklet. Primary &amp; secondary palettes, type system, voice, texture and codifying the KoN brand identity.">
+          <div class="thumb placeholder"><span class="ph-num">02</span></div>
+          <div class="cap"><p class="t">Kings of Neon, Brand Booklet</p><p class="k">Brand · 2025</p></div>
+        </article>
+
+        <article class="work-card span-6 reveal" data-client="Nadin West Joinery" data-title="Nadin West" data-tag="Logo &amp; Branding" data-description="Some projects feel like a natural fit from the first conversation. Nadin West was one of them.
+
+Logo, wordmark, and identity system for a premium joinery business. The brief called for a brand that could hold its own in high-end residential and commercial spaces. Credible enough for architects and developers, approachable enough for homeowners. The solution was confident, considered typography anchored by a quiet warmth. Nothing superfluous. Every detail deliberate.
+
+The engagement covered the full scope of brand identity: logo and wordmark design, typographic system, colour palette, and a suite of design assets built to scale across print, digital, and on-site applications.">
+          <div class="thumb placeholder"><span class="ph-num">03</span></div>
+          <div class="cap"><p class="t">Nadin West Joinery, Re-brand</p><p class="k">Identity · Branding</p></div>
+        </article>
+
+        <article class="work-card span-6 reveal" data-client="Harry Callinan" data-title="Mulga Bills" data-tag="Logo &amp; Branding · Woodfired Catering" data-description="Some client relationships go beyond the brief. Harry is one of those.
+
+What started as a brand identity project has grown into an ongoing creative partnership spanning years. Shoots on location, producing his podcast Rostered On, and somewhere along the way, a genuine friendship.
+
+The identity needed to reflect that same quality. A personal brand built around Harry's voice, his approach to food, and the warmth he brings to every project. Considered, authentic, and distinctly his.">
+          <div class="thumb placeholder"><span class="ph-num">04</span></div>
+          <div class="cap"><p class="t">Mulga Bills</p><p class="k">Identity · Hospitality</p></div>
+        </article>
+
+        <article class="work-card span-4 reveal" data-client="Rise Again" data-title="Rise Again" data-tag="Logo &amp; Branding · Breathwork &amp; Somatic Healing" data-description="Some connections begin with a brief and become something much more meaningful.
+
+A wellness coach with a genuine drive to help people become the best version of themselves, Chris works at the intersection of grounding, breathwork, somatic healing and real, honest conversation. This one became personal — through the work itself, Chris introduced me to breathwork and what it means to be given complete space to be open, to learn, and to heal.">
+          <div class="thumb placeholder"><span class="ph-num">05</span></div>
+          <div class="cap"><p class="t">Rise Again Breathwork &amp; Somatic Healing</p><p class="k">Identity · Wellness</p></div>
+        </article>
+
+        <article class="work-card span-4 reveal" data-client="Omnia Wheel" data-title="Omnia Directional Sortation" data-tag="Brochure · Industrial" data-description="Not every design challenge is about aesthetics. Sometimes the job is clarity.
+
+Omnia Directional Sortation came to us with a genuinely complex product: multi-directional wheel technology that needed to be communicated quickly and convincingly to an industrial audience.
+
+The result was a brochure designed to work hard — clean, confident layout guiding the reader through the technology logically and without friction.">
+          <div class="thumb placeholder"><span class="ph-num">06</span></div>
+          <div class="cap"><p class="t">Omnia Wheel, Directional Sortation</p><p class="k">Brochure</p></div>
+        </article>
+
+        <article class="work-card span-4 reveal" data-client="Omnia Wheel" data-title="Omnia Wheel, Product" data-tag="Brochure · Making mobility intuitive" data-description="The work grew into something more comprehensive: full product photography and the complete design of the Omnia Wheel catalogue, built around the idea of making mobility intuitive.
+
+The photography required precision — dimensioned product shots that had to be technically accurate and visually compelling at the same time, serving both the engineer checking specifications and the buyer making a decision.">
+          <div class="thumb placeholder"><span class="ph-num">07</span></div>
+          <div class="cap"><p class="t">Omnia Wheel</p><p class="k">Product Brochure</p></div>
+        </article>
+
+        <article class="work-card span-12 reveal" data-client="Rotatruck" data-title="Rotatruck" data-tag="Packaging · Print" data-description="While working with Omnia Wheel, a company with a broad product range, Rotatruck was one of several products under the Omnia umbrella that required dedicated design work.
+
+The work spanned a range of products, with packaging design at the core — practical, durable graphics built to survive an industrial environment without losing brand presence. Supported by product photography and 3D modelling to take designs from concept through to production-ready with confidence.">
+          <div class="thumb placeholder placeholder--wide"><span class="ph-num">08</span></div>
+          <div class="cap"><p class="t">Rotatruck, Dairy Crates</p><p class="k">Packaging</p></div>
+        </article>
+
+        <article class="work-card span-6 reveal" data-client="Paul Bennet Airshows" data-title="Central Coast Airshow" data-tag="Event Program · 2024" data-description="There are not many briefs that put you this close to a Spitfire.
+
+The 2024 program was designed to match the energy of the show itself. Bold display typography set against full-bleed aviation photography, with aircraft spotlight spreads that gave each machine the attention it deserved. The cover was built to stop someone in their tracks, the kind of print piece you hold onto long after the day is done.">
+          <div class="thumb placeholder"><span class="ph-num">09</span></div>
+          <div class="cap"><p class="t">Central Coast Airshow</p><p class="k">Program · 2024</p></div>
+        </article>
+
+        <article class="work-card span-6 reveal" data-client="Paul Bennet Airshows" data-title="Warbirds Over Scone" data-tag="Event Program" data-description="Event program design for Warbirds Over Scone — vintage aircraft photography paired with classic event-program typography.">
+          <div class="thumb placeholder"><span class="ph-num">10</span></div>
+          <div class="cap"><p class="t">Warbirds Over Scone</p><p class="k">Airshow Program</p></div>
+        </article>
+
+      </div>
     </div>
   </section>
 
-  <section class="about" id="about">
-    <div class="section-head reveal">
-      <span class="section-num">02</span>
-      <h2>About</h2>
-    </div>
-    <div class="about-grid">
-      <p class="about-text reveal">
-        I'm a multimedia designer working across motion graphics, brand identity
-        and digital design — currently designing at <strong>Kings of Neon</strong>.
-        My background runs through aviation, industrial and media brands, which
-        means I've had to make complex ideas look sharp under real deadlines,
-        not just in a mood board.
-      </p>
-      <div class="about-stats reveal">
-        <div class="stat">
-          <span class="stat-num">TAFE NSW</span>
-          <span class="stat-label">Diploma, Graphic Design</span>
+  <!-- ============== VIMEO ============== -->
+  <section class="reel-block" id="vimeo">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">Showreel · Motion · Video</span>
+          <h2 class="section-title reveal">On Vimeo.</h2>
         </div>
-        <div class="stat">
-          <span class="stat-num">4+</span>
-          <span class="stat-label">Studios &amp; brands worked with</span>
+        <p class="section-lead reveal">A view into 25 years across motion graphics, video editing, broadcast and brand work.</p>
+      </div>
+
+      <div class="reel-wrap reveal">
+        <div class="video-frame video-frame--big">
+          <iframe
+            src="https://player.vimeo.com/video/560246341?title=0&byline=0&portrait=0"
+            title="Motion design showreel"
+            allow="fullscreen; autoplay; encrypted-media"
+            allowfullscreen></iframe>
         </div>
-        <div class="stat">
-          <span class="stat-num">NSW</span>
-          <span class="stat-label">Central Coast, Australia</span>
+      </div>
+      <p class="reel-cap reel-cap--main reveal"><strong>MOTION DESIGN SHOWREEL</strong>A curated mix of projects from across my career — motion design, video editing and sound design woven together into a single reel.</p>
+
+      <div class="reel-divider" aria-hidden="true"></div>
+
+      <div class="reel-slider">
+        <div class="reel-arrows">
+          <button type="button" class="reel-arrow" id="vimeoPrev" aria-label="Previous video">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button type="button" class="reel-arrow" id="vimeoNext" aria-label="Next video">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="reel-track" id="vimeoTrack">
+          <div class="reel-stack reveal">
+            <div class="video-frame">
+              <iframe src="https://player.vimeo.com/video/1193834080?title=0&byline=0&portrait=0" title="Paul Bennet Airshows — Warbirds Over Scone" allow="fullscreen; autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="reel-cap"><strong>PAUL BENNET AIRSHOWS — WARBIRDS OVER SCONE</strong>While working with PBA, I shot and designed content for every facet of the airshow. I hired a Sony FX6, then filmed, edited and delivered content across the 3-day event.</p>
+          </div>
+          <div class="reel-stack reveal">
+            <div class="video-frame">
+              <iframe src="https://player.vimeo.com/video/1193504191?title=0&byline=0&portrait=0" title="Kings of Neon" allow="fullscreen; autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="reel-cap"><strong>KINGS OF NEON</strong>An overview of the content I created during my 16-month period with Kings of Neon — brand videos, social media (paid ads and organic posts), how-to films and explainer videos.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="experience" id="experience">
-    <div class="section-head reveal">
-      <span class="section-num">03</span>
-      <h2>Experience</h2>
+  <!-- ============== YOUTUBE ============== -->
+  <section class="reel-block reel-block--alt" id="youtube">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">Client Work</span>
+          <h2 class="section-title reveal">On YouTube.</h2>
+        </div>
+        <p class="section-lead reveal">Broadcast, product and campaign films made for clients across industries.</p>
+      </div>
+
+      <div class="reel-slider">
+        <div class="reel-arrows">
+          <button type="button" class="reel-arrow" id="ytPrev" aria-label="Previous video">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button type="button" class="reel-arrow" id="ytNext" aria-label="Next video">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="reel-track" id="ytTrack">
+          <div class="reel-stack reveal">
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/5vhmSgJ_M6M?rel=0&modestbranding=1" title="Omnia Plant Glider" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <p class="reel-cap"><strong>OMNIA PLANT GLIDER</strong>While working with Omnia Wheel, I created content for the Omnia Plant Glider — filming, editing and motion graphics for paid ads, organic content and the product's website.</p>
+          </div>
+          <div class="reel-stack reveal">
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/lUt0zo4JwtM?rel=0&modestbranding=1" title="Bengalla — Corporate Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <p class="reel-cap"><strong>BENGALLA — CORPORATE VIDEO</strong>Made while working for Out of the Square Media. I was the sole video editor, motion designer and sound designer on this large-scale project — coordinating the job from start to finish alongside three camera operators and two UAV pilots.</p>
+          </div>
+          <div class="reel-stack reveal">
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/TtoU5nthGwQ?rel=0&modestbranding=1" title="PENN — Start Your Own Battle" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <p class="reel-cap"><strong>PENN — START YOUR OWN BATTLE</strong>PENN is one of the most recognised names in fishing. Being chosen to design the intro, outro and titles for the series was a direct result of prior motion work for the client — energetic, polished, and built to give the series a visual identity of its own.</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <ul class="timeline">
-      <li class="timeline-item reveal">
-        <span class="timeline-role">Multimedia Designer</span>
-        <span class="timeline-org">Kings of Neon</span>
-        <span class="timeline-tag">Current</span>
-      </li>
-      <li class="timeline-item reveal">
-        <span class="timeline-role">Multimedia Designer</span>
-        <span class="timeline-org">Paul Bennet Airshows</span>
-      </li>
-      <li class="timeline-item reveal">
-        <span class="timeline-role">Designer</span>
-        <span class="timeline-org">Omnia Wheel</span>
-      </li>
-      <li class="timeline-item reveal">
-        <span class="timeline-role">Designer</span>
-        <span class="timeline-org">Out Of The Square Media</span>
-      </li>
-    </ul>
   </section>
 
-  <section class="skills" id="skills">
-    <div class="section-head reveal">
-      <span class="section-num">04</span>
-      <h2>Capabilities</h2>
-    </div>
-    <div class="skills-grid">
-      <div class="skill-card reveal"><h3>Motion Graphics</h3><p>After Effects, animation, edit</p></div>
-      <div class="skill-card reveal"><h3>Brand Identity</h3><p>Logo, systems, guidelines</p></div>
-      <div class="skill-card reveal"><h3>Digital Design</h3><p>Web, social, campaign assets</p></div>
-      <div class="skill-card reveal"><h3>Video Editing</h3><p>Premiere Pro, colour, sound</p></div>
-      <div class="skill-card reveal"><h3>Illustration</h3><p>Custom artwork, iconography</p></div>
-      <div class="skill-card reveal"><h3>Art Direction</h3><p>Concept through to delivery</p></div>
+  <!-- ============== ABOUT ============== -->
+  <section class="about-block" id="about">
+    <div class="wrap">
+      <div class="reel-divider" aria-hidden="true"></div>
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">Profile</span>
+          <h2 class="section-title reveal">About<br>Toby.</h2>
+        </div>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-portrait-block reveal">
+          <div class="portrait placeholder"><span>Portrait</span></div>
+          <div class="about-quote-block">
+            <p class="q">"FREEDOM LIES<br>IN BEING BOLD."</p>
+          </div>
+        </div>
+        <div class="about-body reveal">
+          <p class="hello">Hello,</p>
+          <p>I'm a <strong>highly skilled</strong> motion designer, video editor, videographer, graphic designer, and client liaison with 25 years of experience across the design, marketing, and video industries. I'm passionate about design, storytelling, and creating content that connects with audiences and delivers meaningful results.</p>
+          <p>I bring a proactive, creative, and solutions-focused approach to every project, while genuinely valuing collaboration and the ideas of others. I believe the best outcomes come from asking thoughtful questions, staying curious, and continually looking for better ways to work.</p>
+          <p class="bold-line">For me, learning is an ongoing process of asking:</p>
+          <p class="pull-quote">"What am I doing? Why am I doing it this way? Is there a better approach? How can I continue to grow? And how can I create the best possible experience for clients while staying true to my values and achieving strong results?"</p>
+          <p>This mindset has helped me build lasting relationships, solve problems creatively, and deliver work that is both effective and engaging.</p>
+          <p>I'd love the opportunity to bring my experience, creativity, and enthusiasm to your team.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="contact" id="contact">
-    <div class="contact-inner">
-      <p class="contact-eyebrow reveal">05 — Get in touch</p>
-      <h2 class="contact-title reveal">LET'S MAKE<br>SOMETHING LOUD.</h2>
-      <a href="mailto:hello@tobylakeman.design" class="contact-email reveal">hello@tobylakeman.design</a>
-      <div class="contact-links reveal">
-        <a href="https://www.behance.net/tobylakeman/moodboards" target="_blank" rel="noopener">Behance ↗</a>
-        <a href="https://au.linkedin.com/in/tobylakeman" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a href="https://soundcloud.com/toby-lakeman" target="_blank" rel="noopener">SoundCloud ↗</a>
+  <!-- ============== EXPERIENCE ============== -->
+  <section class="exp-block" id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">Career</span>
+          <h2 class="section-title reveal">Experience.</h2>
+        </div>
+        <p class="section-lead reveal">Started as a Junior Graphic Designer. Grew into Motion. Now working across the full spectrum as a multi-disciplinary Multimedia Designer. Brand identity, print, photography, motion, and everything in between. <span class="accent-text">Content that works.</span></p>
+      </div>
+
+      <div class="exp-list">
+        <div class="exp-row reveal">
+          <div class="exp-years">2024 to May 2026</div>
+          <div class="exp-main">
+            <h3>Multimedia Designer / Video Editor / Videographer</h3>
+            <p class="org">Kings of Neon</p>
+            <p>Content creation across all channels — social, videography, video editing, graphic design, and the use of AI tools for photo and video manipulation. Front-end web design and CMS, print and signage design, contributing to the company's rebrand.</p>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">Video</span>
+            <span class="exp-tag">Branding</span>
+            <span class="exp-tag">Web · CMS</span>
+            <span class="exp-tag">AI</span>
+          </div>
+        </div>
+
+        <div class="exp-row reveal">
+          <div class="exp-years">Jan to June 2024</div>
+          <div class="exp-main">
+            <h3>Multimedia Designer / Videographer / Marketing Assistant</h3>
+            <p class="org">Paul Bennet Airshows</p>
+            <p>High-impact content and marketing assets for the company and all supported airshows — photography, videography, video editing, social media, and print. Captured on-site content at every airshow and managed front-end web, signage and brand development.</p>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">Marketing</span>
+            <span class="exp-tag">Photography</span>
+            <span class="exp-tag">Print</span>
+          </div>
+        </div>
+
+        <div class="exp-row reveal">
+          <div class="exp-years">2022 to 2024</div>
+          <div class="exp-main">
+            <h3>Multimedia Designer / Video Editor / Videographer</h3>
+            <p class="org">Omnia Wheel</p>
+            <p>Sole designer for content creation across all channels. End-to-end ownership: filming, photography, video, web design (front end), print media and signage for an Australian company making multi-directional wheels with national and international distribution.</p>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">End-to-end</span>
+            <span class="exp-tag">Photography</span>
+            <span class="exp-tag">Video</span>
+          </div>
+        </div>
+
+        <div class="exp-row reveal">
+          <div class="exp-years">Freelance</div>
+          <div class="exp-main">
+            <h3>Creative Director, Video Editor, Graphic Designer</h3>
+            <p class="org">Independent · Freelance</p>
+            <p>Direct client work across motion graphics, broadcast, digital marketing and social, adapting tone and treatment for each brand and platform.</p>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">Direction</span>
+            <span class="exp-tag">Motion</span>
+          </div>
+        </div>
+
+        <div class="exp-row reveal">
+          <div class="exp-years">2001 to 2019</div>
+          <div class="exp-main">
+            <h3>Senior Graphic Designer &rarr; Senior Motion Designer &amp; Editor</h3>
+            <p class="org">Out of the Square Media</p>
+            <p>Started as a graphic designer (print, catalogues for Camera House and Paxtons, logos), then evolved into broadcast graphics, Flash animation, web design and video graphics. Self-taught After Effects in the early 2000s. Clients included Perisher, Northern NSW Football, Newcastle Airport, Tamworth Country Music Festival, Greater Bank, Nikon, the Catholic Schools Office (Dancing with the Stars), the Cancer Council and many more.</p>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">Broadcast</span>
+            <span class="exp-tag">Motion</span>
+            <span class="exp-tag">Graphic Design</span>
+          </div>
+        </div>
+
+        <div class="exp-row reveal">
+          <div class="exp-years">1999 to 2000</div>
+          <div class="exp-main">
+            <h3>Graphic Designer</h3>
+            <p class="org">Brilliant Logic</p>
+            <p>First role out of the TAFE Hunter Design Faculty diploma. Secured full-time employment two weeks before completing the course.</p>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">Junior</span>
+            <span class="exp-tag">Print</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== CAPABILITIES ============== -->
+  <section class="cap-block">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">Toolkit</span>
+          <h2 class="section-title reveal">Skills &amp;<br>Expertise.</h2>
+        </div>
+        <p class="section-lead reveal">Software I use daily, communication tools I work in, and the soft skills that make collaboration work.</p>
+      </div>
+
+      <div class="cap-grid">
+        <div class="cap-col reveal">
+          <h3>Skills</h3>
+          <div class="hr"></div>
+          <ul>
+            <li>Creativity</li>
+            <li>Filming &amp; Photography</li>
+            <li>Flexibility</li>
+            <li>Working in a group</li>
+            <li>Time Management</li>
+            <li>AI Generation <span class="note">image &amp; video manipulation</span></li>
+          </ul>
+        </div>
+
+        <div class="cap-col reveal">
+          <h3>Expertise</h3>
+          <div class="hr"></div>
+          <ul>
+            <li>After Effects <span class="note">joined at the hip</span></li>
+            <li>DaVinci Resolve <span class="note">editing, colour grading</span></li>
+            <li>Premiere <span class="note">video editing</span></li>
+            <li>Audition <span class="note">sound design</span></li>
+            <li>Photoshop <span class="note">anything's possible</span></li>
+            <li>Illustrator <span class="note">graphics to scale</span></li>
+            <li>InDesign <span class="note">adaptable layouts</span></li>
+            <li>Figma · Canva</li>
+          </ul>
+        </div>
+
+        <div class="cap-col reveal">
+          <h3>Communication</h3>
+          <div class="hr"></div>
+          <ul>
+            <li>Slack</li>
+            <li>Monday</li>
+            <li>Microsoft 365</li>
+            <li>Google Workspace</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== REFERENCES ============== -->
+  <section class="refs-block">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">People who will vouch for my work</span>
+          <h2 class="section-title reveal">References.</h2>
+        </div>
+        <p class="section-lead reveal">People I've worked alongside. They're happy to chat about my work.</p>
+      </div>
+      <div class="refs-grid">
+        <div class="ref-card reveal">
+          <p class="name">James Medlam</p>
+          <p class="role-line">Director, Cinematographer, Kings of Neon Brand Guardian</p>
+          <a class="phone" href="tel:0413546694">0413 546 694</a>
+        </div>
+        <div class="ref-card reveal">
+          <p class="name">Stephen Pastor</p>
+          <p class="role-line">CEO &amp; Founder, Kings of Neon</p>
+          <a class="phone" href="tel:0431187967">0431 187 967</a>
+        </div>
+        <div class="ref-card reveal">
+          <p class="name">Harry Callinan</p>
+          <p class="role-line">Chef, TAFE Teacher, Podcaster &amp; Mulga Bills Owner</p>
+          <a class="phone" href="tel:0421859832">0421 859 832</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== CONTACT ============== -->
+  <section class="contact-block" id="contact">
+    <div class="hero-bg hero-bg--contact" aria-hidden="true">
+      <div class="hero-blob hero-blob--a"></div>
+      <div class="hero-blob hero-blob--b"></div>
+    </div>
+    <div class="wrap">
+      <div class="contact-inner">
+        <span class="eyebrow reveal">Get in touch</span>
+        <h2 class="contact-h reveal">Let's <span class="accent-text">create</span><br>together.</h2>
+        <p class="section-lead reveal">Drop me a line. I'm looking for full-time employment.</p>
+
+        <div class="contact-rows reveal">
+          <a class="contact-row" href="tel:+61427061979">
+            <span class="lbl">Phone</span>
+            +61 427 061 979
+          </a>
+          <a class="contact-row" href="mailto:tobylakeman@gmail.com">
+            <span class="lbl">Email</span>
+            tobylakeman@gmail.com
+          </a>
+        </div>
+
+        <div class="contact-socials reveal">
+          <a class="social-link" href="https://vimeo.com/1193504191" target="_blank" rel="noopener"><span class="ic" data-icon="vimeo"></span>Vimeo</a>
+          <a class="social-link" href="https://www.youtube.com/@tobylakeman" target="_blank" rel="noopener"><span class="ic" data-icon="youtube"></span>YouTube</a>
+          <a class="social-link" href="https://www.behance.net/tobylakeman" target="_blank" rel="noopener"><span class="ic" data-icon="behance"></span>Behance</a>
+          <a class="social-link" href="https://www.instagram.com/tobyjohn/" target="_blank" rel="noopener"><span class="ic" data-icon="instagram"></span>Instagram</a>
+          <a class="social-link" href="https://www.linkedin.com/in/tobylakeman/" target="_blank" rel="noopener"><span class="ic" data-icon="linkedin"></span>LinkedIn</a>
+        </div>
       </div>
     </div>
   </section>
 
 </main>
 
-<footer class="site-footer">
-  <div class="marquee marquee-footer" aria-hidden="true">
-    <div class="marquee-track">
-      <span>TOBY LAKEMAN</span><span class="dot">✦</span>
-      <span>MULTIMEDIA DESIGNER</span><span class="dot">✦</span>
-      <span>TOBY LAKEMAN</span><span class="dot">✦</span>
-      <span>MULTIMEDIA DESIGNER</span><span class="dot">✦</span>
-      <span>TOBY LAKEMAN</span><span class="dot">✦</span>
-      <span>MULTIMEDIA DESIGNER</span><span class="dot">✦</span>
+<footer class="footer">
+  <span class="brand">Toby Lakeman</span>
+  <span>&copy; <span id="year"></span> &middot; Multimedia Designer &middot; Content Creator &middot; Merewether NSW</span>
+</footer>
+
+<!-- ============== LIGHTBOX ============== -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="lightbox-inner">
+    <div class="lightbox-img placeholder"><span id="lightboxNum"></span></div>
+    <div class="lightbox-meta">
+      <p class="lightbox-k" id="lightboxTag"></p>
+      <h3 class="lightbox-t" id="lightboxTitle"></h3>
+      <p class="lightbox-client" id="lightboxClient"></p>
+      <p class="lightbox-desc" id="lightboxDesc"></p>
     </div>
   </div>
-  <div class="footer-bottom">
-    <span>© <span id="year"></span> Toby Lakeman</span>
-    <a href="#top">Back to top ↑</a>
-  </div>
-</footer>
+</div>
 
 <script src="js/main.js"></script>
 </body>

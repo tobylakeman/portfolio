@@ -1,33 +1,25 @@
 (() => {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const isTouch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  /* Header show/hide on scroll direction */
-  const header = document.querySelector(".site-header");
+  /* Nav scroll state */
+  const nav = document.getElementById("nav");
   let lastY = window.scrollY;
-
   window.addEventListener("scroll", () => {
     const y = window.scrollY;
-    header.classList.toggle("is-scrolled", y > 10);
-    if (y > lastY && y > 120) {
-      header.classList.add("is-hidden");
-    } else {
-      header.classList.remove("is-hidden");
-    }
+    nav.classList.toggle("scrolled", y > 10);
+    nav.classList.toggle("is-hidden", y > lastY && y > 120);
     lastY = y;
   }, { passive: true });
 
-  /* Mobile nav toggle */
+  /* Mobile nav */
   const navToggle = document.querySelector(".nav-toggle");
   const mobileNav = document.getElementById("mobileNav");
-
   navToggle.addEventListener("click", () => {
     const isOpen = mobileNav.classList.toggle("is-open");
     navToggle.setAttribute("aria-expanded", String(isOpen));
   });
-
   mobileNav.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => {
       mobileNav.classList.remove("is-open");
@@ -35,93 +27,93 @@
     });
   });
 
-  /* Custom cursor */
-  if (!isTouch && !prefersReducedMotion) {
-    const dot = document.querySelector(".cursor-dot");
-    const ring = document.querySelector(".cursor-ring");
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
-
-    window.addEventListener("mousemove", (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-    });
-
-    const animateRing = () => {
-      ringX += (mouseX - ringX) * 0.15;
-      ringY += (mouseY - ringY) * 0.15;
-      ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
-      requestAnimationFrame(animateRing);
-    };
-    requestAnimationFrame(animateRing);
-
-    document.querySelectorAll("a, button, .work-card").forEach((el) => {
-      el.addEventListener("mouseenter", () => ring.classList.add("is-active"));
-      el.addEventListener("mouseleave", () => ring.classList.remove("is-active"));
-    });
-  }
-
-  /* Hero text scramble-in */
-  const scrambleEl = document.querySelector("[data-scramble]");
-  if (scrambleEl) {
-    const finalText = scrambleEl.dataset.scramble;
-    if (prefersReducedMotion) {
-      scrambleEl.textContent = finalText;
-    } else {
-      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      let frame = 0;
-      const totalFrames = 24;
-
-      const tick = () => {
-        let output = "";
-        for (let i = 0; i < finalText.length; i++) {
-          const charProgress = (frame / totalFrames) * finalText.length;
-          if (finalText[i] === " ") {
-            output += " ";
-          } else if (i < charProgress - 3) {
-            output += finalText[i];
-          } else if (i < charProgress) {
-            output += chars[Math.floor(Math.random() * chars.length)];
-          } else {
-            output += " ";
-          }
-        }
-        scrambleEl.textContent = output;
-        frame++;
-        if (frame <= totalFrames + 3) {
-          requestAnimationFrame(tick);
-        } else {
-          scrambleEl.textContent = finalText;
-        }
-      };
-      requestAnimationFrame(tick);
-    }
-  }
-
   /* Scroll reveal */
   const revealEls = document.querySelectorAll(".reveal");
   if (prefersReducedMotion || !("IntersectionObserver" in window)) {
-    revealEls.forEach((el) => el.classList.add("is-visible"));
+    revealEls.forEach((el) => el.classList.add("in"));
   } else {
-    const observer = new IntersectionObserver((entries) => {
+    const io = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add("is-visible"), Math.min(i, 5) * 60);
-          observer.unobserve(entry.target);
+          setTimeout(() => entry.target.classList.add("in"), Math.min(i, 5) * 60);
+          io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15, rootMargin: "0px 0px -60px 0px" });
-
-    revealEls.forEach((el) => observer.observe(el));
+    }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
+    revealEls.forEach((el) => io.observe(el));
   }
 
-  /* Parallax hero watermark */
-  const watermark = document.querySelector("[data-parallax]");
-  if (watermark && !prefersReducedMotion) {
-    window.addEventListener("scroll", () => {
-      const y = window.scrollY;
-      watermark.style.transform = `translate(-50%, calc(-50% + ${y * 0.25}px))`;
-    }, { passive: true });
+  /* Reel sliders */
+  function initSlider(trackId, prevId, nextId) {
+    const track = document.getElementById(trackId);
+    const prev = document.getElementById(prevId);
+    const next = document.getElementById(nextId);
+    if (!track || !prev || !next) return;
+
+    const step = () => {
+      const card = track.querySelector(".reel-stack");
+      if (!card) return 320;
+      const gap = parseFloat(getComputedStyle(track).columnGap || "24");
+      return card.getBoundingClientRect().width + gap;
+    };
+
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth - 1;
+      prev.disabled = track.scrollLeft <= 1;
+      next.disabled = track.scrollLeft >= max;
+    };
+
+    prev.addEventListener("click", () => track.scrollBy({ left: -step(), behavior: "smooth" }));
+    next.addEventListener("click", () => track.scrollBy({ left: step(), behavior: "smooth" }));
+    track.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    setTimeout(update, 80);
   }
+  initSlider("vimeoTrack", "vimeoPrev", "vimeoNext");
+  initSlider("ytTrack", "ytPrev", "ytNext");
+
+  /* Social icon SVGs */
+  const ICONS = {
+    vimeo: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.977 6.416c-.105 2.338-1.74 5.541-4.908 9.61-3.275 4.252-6.045 6.378-8.309 6.378-1.401 0-2.586-1.295-3.553-3.886L5.275 12.21C4.563 9.616 3.798 8.318 2.979 8.318c-.179 0-.806.378-1.881 1.132L0 8.018c1.185-1.041 2.351-2.083 3.501-3.124C5.078 3.532 6.261 2.81 7.05 2.737c1.863-.18 3.01 1.097 3.443 3.831.467 2.952.79 4.788.967 5.507.533 2.42 1.118 3.63 1.756 3.63.495 0 1.238-.78 2.232-2.341.99-1.561 1.522-2.749 1.594-3.566.144-1.371-.395-2.058-1.594-2.058-.567 0-1.151.13-1.751.387 1.16-3.804 3.378-5.653 6.652-5.548 2.428.072 3.572 1.645 3.428 4.713z"/></svg>',
+    behance: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 7h-7V5h7zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 3.211 3.483 3.312 4.588 2.029zm-7.717-5.013h4.985c-.106-1.547-1.136-2.219-2.451-2.219-1.437 0-2.231.768-2.534 2.219m-7.851.022s2.518.122 2.518-2.346c0-2.46-1.708-2.464-2.518-2.464H3v4.81zM3 13.484v5.516h5.534c1.014 0 2.694-.32 2.694-2.711C11.228 13.673 9.6 13.485 8.534 13.485z"/></svg>',
+    instagram: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>',
+    linkedin: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5V5c0-2.761-2.238-5-5-5zM8 19H5V8h3zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764S7.466 6.732 6.5 6.732zM20 19h-3v-5.604c0-3.368-4-3.113-4 0V19h-3V8h3v1.765c1.396-2.586 7-2.777 7 2.476z"/></svg>',
+    youtube: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>'
+  };
+  document.querySelectorAll(".ic[data-icon]").forEach((el) => {
+    el.innerHTML = ICONS[el.dataset.icon] || "";
+  });
+
+  /* Work lightbox */
+  const lightbox = document.getElementById("lightbox");
+  const lightboxClose = document.getElementById("lightboxClose");
+  const lightboxNum = document.getElementById("lightboxNum");
+  const lightboxTag = document.getElementById("lightboxTag");
+  const lightboxTitle = document.getElementById("lightboxTitle");
+  const lightboxClient = document.getElementById("lightboxClient");
+  const lightboxDesc = document.getElementById("lightboxDesc");
+
+  function openLightbox(card) {
+    const num = card.querySelector(".ph-num")?.textContent || "";
+    lightboxNum.textContent = num;
+    lightboxTag.textContent = card.dataset.tag || "";
+    lightboxTitle.textContent = card.dataset.title || "";
+    lightboxClient.innerHTML = card.dataset.client ? `Client &nbsp;&middot;&nbsp; <strong>${card.dataset.client}</strong>` : "";
+    lightboxDesc.textContent = card.dataset.description || "";
+    document.body.classList.add("lb-open");
+  }
+  function closeLightbox() {
+    document.body.classList.remove("lb-open");
+  }
+
+  document.querySelectorAll(".work-card").forEach((card) => {
+    card.addEventListener("click", () => openLightbox(card));
+  });
+  lightboxClose.addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeLightbox();
+  });
 })();

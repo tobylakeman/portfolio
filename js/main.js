@@ -3,6 +3,18 @@
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
+  /* Theme toggle (light/dark), persisted in localStorage. The initial
+     theme is already applied by the inline head script before paint;
+     this just wires up the button and keeps things in sync. */
+  const themeToggle = document.getElementById("themeToggle");
+  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+  themeToggle.addEventListener("click", () => {
+    const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem("theme", next);
+    if (metaThemeColor) metaThemeColor.setAttribute("content", next === "light" ? "#ffffff" : "#000000");
+  });
+
   /* Nav scroll state */
   const nav = document.getElementById("nav");
   let lastY = window.scrollY;
@@ -154,17 +166,6 @@
       });
     }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
     spySections.forEach((section) => spyIo.observe(section));
-  }
-
-  /* Parallax hero background on scroll */
-  const heroBgs = document.querySelectorAll(".hero-bg");
-  if (heroBgs.length && !prefersReducedMotion) {
-    window.addEventListener("scroll", () => {
-      const y = window.scrollY;
-      heroBgs.forEach((bg) => {
-        bg.style.transform = `translateY(${y * 0.15}px)`;
-      });
-    }, { passive: true });
   }
 
   /* Hero art "shatter" — slices the hero artwork into a grid of tiles

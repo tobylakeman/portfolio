@@ -155,24 +155,8 @@
   }
   .hero-media .placeholder-sweep {
     position: absolute;
-    inset: -20%;
-    background:
-      repeating-linear-gradient(0deg, rgba(250,246,236,0.05) 0px, rgba(250,246,236,0.05) 1px, transparent 1px, transparent 3px),
-      linear-gradient(180deg, #2e2b25 0%, #17140e 60%, #0a0805 100%);
-    animation: sweep 22s ease-in-out infinite alternate;
-  }
-  @keyframes sweep {
-    0% { transform: translate3d(-2%, -1%, 0) scale(1.05); }
-    100% { transform: translate3d(2%, 1%, 0) scale(1.12); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .hero-media .placeholder-sweep { animation: none; }
-  }
-  .hero-media::after {
-    content: '';
-    position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(20,18,12,0.35) 0%, rgba(20,18,12,0.55) 55%, var(--ink) 100%);
+    background: #000000;
   }
   .media-tag {
     position: absolute;

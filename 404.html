@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — Octobia Media</title>
+<script>
+  (function () {
+    var saved = localStorage.getItem('theme');
+    document.documentElement.dataset.theme = saved === 'light' ? 'light' : 'dark';
+  })();
+</script>
+
+<meta name="robots" content="noindex, follow">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="apple-touch-icon" href="assets/favicon.svg">
+<meta name="theme-color" content="#0a0a0a">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav" id="nav">
+  <a href="index.html" class="brand">Octobia Media<span class="dot">.</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="work.html">Work</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" title="Toggle theme">
+    <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="work.html">Work</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<main id="main">
+  <section class="notfound">
+    <div class="wrap">
+      <div class="notfound-code reveal">404</div>
+      <h2 class="reveal">Ooops! Page not found.</h2>
+      <p class="reveal">The page you're looking for doesn't exist or has been moved. Let's get you back on track.</p>
+      <div class="hero-actions reveal" style="justify-content: center;">
+        <a class="btn" href="index.html"><span class="btn-inner">Back to home <span class="arr">&rarr;</span></span></a>
+        <a class="btn btn--ghost" href="work.html"><span class="btn-inner">See our work <span class="arr">&rarr;</span></span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <span class="brand">Octobia Media</span>
+  <span>&copy; <span id="year"></span> &middot; Multimedia Design Studio &middot; Newcastle NSW</span>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

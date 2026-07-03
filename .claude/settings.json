@@ -4,5 +4,6 @@
       "Artifact"
     ],
     "defaultMode": "bypassPermissions"
-  }
+  },
+  "skipDangerousModePermissionPrompt": true
 }

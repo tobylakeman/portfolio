@@ -52,6 +52,7 @@
     --signal-deep: #a68b00;
     --mute-on-ink: #b7ac8c;
     --mute-on-paper: #6b6248;
+    --accent-purple: #4b2e9e;
     --line-on-ink: rgba(250, 246, 236, 0.16);
     --line-on-paper: rgba(20, 18, 12, 0.16);
     --line-on-signal: rgba(20, 18, 12, 0.22);
@@ -257,8 +258,8 @@
   .thread {
     position: absolute;
     top: 0;
-    left: clamp(1.4rem, 4.4vw, 3.2rem);
-    width: 6px;
+    left: clamp(0.6rem, 3.6vw, 2.6rem);
+    width: 48px;
     height: 100%;
     pointer-events: none;
     z-index: 5;
@@ -266,25 +267,29 @@
   }
   @media (min-width: 640px) { .thread { display: block; } }
   .thread svg { position: absolute; top: 0; left: 0; overflow: visible; }
-  .thread path.outline {
-    fill: none;
+  .tentacle-body {
+    fill: var(--signal);
     stroke: var(--ink);
-    stroke-width: 5.5;
-    stroke-linecap: round;
-    opacity: 0.55;
+    stroke-width: 2;
+    stroke-linejoin: round;
   }
-  .thread path.line {
-    fill: none;
-    stroke: #ffffff;
-    stroke-width: 2.4;
+  .tentacle-stripe {
+    fill: var(--accent-purple);
+  }
+  .tentacle-sucker {
+    stroke: var(--ink);
+    stroke-width: 1.4;
     stroke-linecap: round;
+    opacity: 0.6;
   }
   .thread circle.dot-outline {
     fill: var(--ink);
-    opacity: 0.55;
+    opacity: 0.6;
   }
   .thread circle.dot {
-    fill: #ffffff;
+    fill: var(--accent-purple);
+    stroke: var(--ink);
+    stroke-width: 1;
     transform-box: fill-box;
     transform-origin: center;
     transform: scale(0.6);
@@ -519,7 +524,7 @@
     background: var(--line-on-ink);
     cursor: pointer;
   }
-  .carousel-dots button.active { background: var(--signal); }
+  .carousel-dots button.active { background: var(--accent-purple); }
 
   .process-strip {
     display: grid;
@@ -592,9 +597,15 @@
 </style>
 
 <div class="thread" id="thread" aria-hidden="true">
-  <svg id="threadSvg" width="24" xmlns="http://www.w3.org/2000/svg">
-    <path id="threadOutline" class="outline" d=""></path>
-    <path id="threadPath" class="line" d=""></path>
+  <svg id="threadSvg" width="48" xmlns="http://www.w3.org/2000/svg">
+    <clipPath id="tentacleClip">
+      <rect id="tentacleClipRect" x="-40" y="0" width="128" height="0"></rect>
+    </clipPath>
+    <g id="tentacleGroup" clip-path="url(#tentacleClip)">
+      <path id="tentacleBody" class="tentacle-body" d=""></path>
+      <path id="tentacleStripe" class="tentacle-stripe" d=""></path>
+      <g id="tentacleSuckers"></g>
+    </g>
   </svg>
 </div>
 
@@ -881,31 +892,87 @@
     rows.forEach(function (row) { row.classList.add('in'); });
   }
 
-  // ---------- Flowing thread: hand-wobbled line connecting each section ----------
+  // ---------- Octopus tentacle: tapering ribbon trailing from the logo, down the page ----------
   (function () {
     var svg = document.getElementById('threadSvg');
-    var path = document.getElementById('threadPath');
-    var outline = document.getElementById('threadOutline');
+    var body = document.getElementById('tentacleBody');
+    var stripe = document.getElementById('tentacleStripe');
+    var suckers = document.getElementById('tentacleSuckers');
+    var clipRect = document.getElementById('tentacleClipRect');
     var sections = Array.prototype.slice.call(document.querySelectorAll('main section'));
     var dots = [];
+    var docH = 0;
+
+    var baseX = 24, amp = 11, period = 300;
+    var wMax = 21, wMin = 4;
+
+    function centerAt(y) {
+      return baseX + amp * Math.sin((y / period) * Math.PI * 2) + 3 * Math.sin((y / (period * 0.37)) * Math.PI * 2);
+    }
+    function widthAt(y) {
+      var t = docH > 0 ? y / docH : 0;
+      var taper = wMax * (1 - t) + wMin * t;
+      return Math.max(wMin * 0.7, taper + 1.6 * Math.sin(y / 95));
+    }
 
     function build() {
-      var docH = document.documentElement.scrollHeight;
+      docH = document.documentElement.scrollHeight;
       svg.setAttribute('height', docH);
-      var d = 'M 3 0 ';
-      var step = 34, amp = 9, period = 260;
-      for (var y = 0; y <= docH; y += step) {
-        var x = 3 + amp * Math.sin((y / period) * Math.PI * 2);
-        d += 'L ' + x.toFixed(1) + ' ' + y + ' ';
+
+      var step = 14;
+      var pts = [];
+      for (var y = 0; y <= docH; y += step) pts.push(y);
+      if (pts[pts.length - 1] !== docH) pts.push(docH);
+
+      var left = [], right = [], stripeInner = [], stripeOuter = [];
+      for (var i = 0; i < pts.length; i++) {
+        var y = pts[i];
+        var x = centerAt(y);
+        var yPrev = pts[Math.max(0, i - 1)];
+        var yNext = pts[Math.min(pts.length - 1, i + 1)];
+        var dx = centerAt(yNext) - centerAt(yPrev);
+        var dy = yNext - yPrev || 1;
+        var len = Math.sqrt(dx * dx + dy * dy) || 1;
+        var nx = -dy / len, ny = dx / len; // normal
+        var w = widthAt(y);
+        left.push([x + nx * w / 2, y + ny * w / 2]);
+        right.push([x - nx * w / 2, y - ny * w / 2]);
+        var so = w * 0.42, si = w * 0.14;
+        stripeOuter.push([x + nx * so, y + ny * so]);
+        stripeInner.push([x + nx * si, y + ny * si]);
       }
-      path.setAttribute('d', d);
-      outline.setAttribute('d', d);
+
+      function toPath(a, b) {
+        var d = 'M ' + a[0][0].toFixed(1) + ' ' + a[0][1].toFixed(1) + ' ';
+        for (var i = 1; i < a.length; i++) d += 'L ' + a[i][0].toFixed(1) + ' ' + a[i][1].toFixed(1) + ' ';
+        for (var j = b.length - 1; j >= 0; j--) d += 'L ' + b[j][0].toFixed(1) + ' ' + b[j][1].toFixed(1) + ' ';
+        return d + 'Z';
+      }
+      body.setAttribute('d', toPath(left, right));
+      stripe.setAttribute('d', toPath(stripeOuter, stripeInner));
+
+      suckers.innerHTML = '';
+      for (var sy = 60; sy < docH; sy += 66) {
+        var sx = centerAt(sy);
+        var yP = sy - 6, yN = sy + 6;
+        var sdx = centerAt(yN) - centerAt(yP), sdy = 12;
+        var slen = Math.sqrt(sdx * sdx + sdy * sdy) || 1;
+        var snx = -sdy / slen, sny = sdx / slen;
+        var sw = widthAt(sy) * 0.62;
+        var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', (sx - snx * sw / 2).toFixed(1));
+        line.setAttribute('y1', (sy - sny * sw / 2).toFixed(1));
+        line.setAttribute('x2', (sx + snx * sw / 2).toFixed(1));
+        line.setAttribute('y2', (sy + sny * sw / 2).toFixed(1));
+        line.setAttribute('class', 'tentacle-sucker');
+        suckers.appendChild(line);
+      }
 
       dots.forEach(function (pair) { pair[0].remove(); pair[1].remove(); });
       dots = [];
       sections.forEach(function (sec) {
         var y = sec.offsetTop + 40;
-        var x = 3 + amp * Math.sin((y / period) * Math.PI * 2);
+        var x = centerAt(y);
         var back = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         back.setAttribute('cx', x.toFixed(1));
         back.setAttribute('cy', y);
@@ -921,32 +988,24 @@
         svg.appendChild(front);
         dots.push([back, front]);
       });
+
+      clipRect.setAttribute('width', '128');
     }
     build();
     window.addEventListener('resize', build);
 
-    var pathLen = 0;
-    function measure() { pathLen = path.getTotalLength(); }
-    setTimeout(measure, 50);
-    window.addEventListener('resize', function () { setTimeout(measure, 50); });
-
     if (reduceMotion) {
-      path.style.strokeDasharray = 'none';
-      outline.style.strokeDasharray = 'none';
+      clipRect.setAttribute('height', String(docH));
     } else {
       var ticking = false;
       function onScroll() {
         if (ticking) return;
         ticking = true;
         requestAnimationFrame(function () {
-          if (!pathLen) measure();
           var scrollable = document.documentElement.scrollHeight - window.innerHeight;
           var progress = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 1;
-          var offset = pathLen * (1 - progress);
-          path.style.strokeDasharray = pathLen;
-          path.style.strokeDashoffset = offset;
-          outline.style.strokeDasharray = pathLen;
-          outline.style.strokeDashoffset = offset;
+          var minReveal = 260;
+          clipRect.setAttribute('height', String(minReveal + (docH - minReveal) * progress));
           ticking = false;
         });
       }

@@ -358,40 +358,49 @@
   .ticker-track span::after { content: '\00b7'; opacity: 0.5; }
   @keyframes scroll { to { transform: translateX(-50%); } }
 
-  .rundown {
+  .arms-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    border-top: 1px solid var(--line-on-ink);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.1rem;
     margin-top: clamp(3rem, 6vw, 4.5rem);
   }
-  .rundown-row {
-    display: grid;
-    grid-template-columns: 5.5rem 1fr;
-    gap: 1.5rem;
-    align-items: baseline;
-    padding: 1.4rem 0;
-    border-bottom: 1px solid var(--line-on-ink);
+  @media (min-width: 700px) { .arms-grid { grid-template-columns: repeat(4, 1fr); } }
+  .arm-tile {
+    position: relative;
+    border-radius: 16px;
+    padding: 1.5rem 1.25rem;
+    min-height: 172px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transform: rotate(var(--tilt, 0deg));
     opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1), box-shadow 0.3s ease, opacity 0.6s ease;
   }
-  .rundown-row.in { opacity: 1; transform: none; }
-  @media (prefers-reduced-motion: reduce) { .rundown-row { opacity: 1; transform: none; transition: none; } }
-  .rundown-row .tc {
+  .arm-tile.in { opacity: 1; }
+  .arm-tile:hover {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 0 20px 44px rgba(0,0,0,0.4);
+    z-index: 2;
+  }
+  @media (prefers-reduced-motion: reduce) { .arm-tile { opacity: 1; transition: none; } }
+  .arm-tile .arm-num {
     font-family: var(--mono);
-    font-size: 0.8rem;
-    color: var(--signal);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
   }
-  .rundown-row h3 {
-    font-size: clamp(1.4rem, 2.6vw, 2rem);
+  .arm-tile h3 {
+    font-size: clamp(1.1rem, 1.7vw, 1.4rem);
     text-transform: none;
     line-height: 1.05;
+    margin: 0.75rem 0 0;
   }
-  .rundown-row p {
-    margin: 0.4rem 0 0;
-    max-width: 46ch;
-    color: var(--mute-on-ink);
-    font-size: 0.98rem;
+  .arm-tile p {
+    margin: 0.6rem 0 0;
+    max-width: 28ch;
+    font-size: 0.86rem;
+    opacity: 0.82;
   }
 
   .carousel {
@@ -1141,50 +1150,48 @@
 
   <section class="on-ink" id="services">
     <div class="wrap">
-      <p class="eyebrow">Rundown &middot; Services</p>
-      <h2 class="section-head">What runs through the studio.</h2>
-      <div class="rundown" id="rundown">
-        <div class="rundown-row">
-          <span class="tc">00:00</span>
-          <div>
-            <h3>Brand &amp; Identity</h3>
-            <p>Logos, wordmarks, and brand systems built with a type and colour language that holds up anywhere.</p>
-          </div>
+      <p class="eyebrow">Capabilities</p>
+      <h2 class="section-head">8 arms of creative marketing.</h2>
+      <div class="arms-grid" id="arms">
+        <div class="arm-tile" style="--tilt:-3deg; background:var(--signal); color:var(--ink);">
+          <span class="arm-num">01</span>
+          <h3>Brand &amp; Identity</h3>
+          <p>Logos, wordmarks, and brand systems built with a type and colour language that holds up anywhere.</p>
         </div>
-        <div class="rundown-row">
-          <span class="tc">00:14</span>
-          <div>
-            <h3>Print &amp; Packaging</h3>
-            <p>Catalogues, brochures, event programs, and packaging designed to survive real-world use, not just a screen.</p>
-          </div>
+        <div class="arm-tile" style="--tilt:2deg; background:var(--accent-purple); color:var(--paper);">
+          <span class="arm-num">02</span>
+          <h3>Illustration &amp; Art Direction</h3>
+          <p>Hand-drawn linework and art direction that gives a brand a hand, not just a template.</p>
         </div>
-        <div class="rundown-row">
-          <span class="tc">00:28</span>
-          <div>
-            <h3>Motion &amp; Video</h3>
-            <p>Motion graphics, editing, colour, and sound design, shot and finished in-house from brief to delivery.</p>
-          </div>
+        <div class="arm-tile" style="--tilt:-2deg; background:var(--ink-2); color:var(--paper);">
+          <span class="arm-num">03</span>
+          <h3>Print &amp; Packaging</h3>
+          <p>Catalogues, brochures, event programs, and packaging designed to survive real-world use, not just a screen.</p>
         </div>
-        <div class="rundown-row">
-          <span class="tc">00:42</span>
-          <div>
-            <h3>Photography</h3>
-            <p>Product, portrait, and event photography, often pulled from the same production as the film.</p>
-          </div>
+        <div class="arm-tile" style="--tilt:3deg; background:var(--paper); color:var(--ink);">
+          <span class="arm-num">04</span>
+          <h3>Motion &amp; Video</h3>
+          <p>Motion graphics, editing, colour, and sound design, shot and finished from brief to delivery.</p>
         </div>
-        <div class="rundown-row">
-          <span class="tc">00:56</span>
-          <div>
-            <h3>AI-Assisted Production</h3>
-            <p>Image and video generation used to extend a shoot or a system, not replace the craft behind it.</p>
-          </div>
+        <div class="arm-tile" style="--tilt:2deg; background:var(--accent-purple); color:var(--paper);">
+          <span class="arm-num">05</span>
+          <h3>Photography</h3>
+          <p>Product, portrait, and event photography, often pulled from the same production as the film.</p>
         </div>
-        <div class="rundown-row">
-          <span class="tc">01:10</span>
-          <div>
-            <h3>Digital &amp; Social Systems</h3>
-            <p>The same brand, adapted and versioned for feed, screen, and platform without losing the plot.</p>
-          </div>
+        <div class="arm-tile" style="--tilt:-3deg; background:var(--signal); color:var(--ink);">
+          <span class="arm-num">06</span>
+          <h3>Digital &amp; Social Systems</h3>
+          <p>The same brand, adapted and versioned for feed, screen, and platform without losing the plot.</p>
+        </div>
+        <div class="arm-tile" style="--tilt:3deg; background:var(--paper); color:var(--ink);">
+          <span class="arm-num">07</span>
+          <h3>Campaign Strategy</h3>
+          <p>Creative concepts and campaign plans built to run across every channel a launch needs.</p>
+        </div>
+        <div class="arm-tile" style="--tilt:-2deg; background:var(--ink-2); color:var(--paper);">
+          <span class="arm-num">08</span>
+          <h3>AI-Assisted Production</h3>
+          <p>Image and video generation used to extend a shoot or a system, not replace the craft behind it.</p>
         </div>
       </div>
     </div>
@@ -1281,14 +1288,14 @@
 </main>
 
 <script>
-  var disciplines = ['Brand &amp; Identity','Print &amp; Packaging','Motion &amp; Video','Photography','AI-Assisted Production','Digital Systems'];
+  var disciplines = ['Brand &amp; Identity','Illustration &amp; Art Direction','Print &amp; Packaging','Motion &amp; Video','Photography','Digital Systems','Campaign Strategy','AI-Assisted Production'];
   var track = document.getElementById('ticker');
   var loopText = disciplines.concat(disciplines).map(function (d) { return '<span>' + d + '</span>'; }).join('');
   track.innerHTML = loopText;
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var rows = document.querySelectorAll('.rundown-row, .fade-in');
+  var rows = document.querySelectorAll('.arm-tile, .fade-in');
   if ('IntersectionObserver' in window && !reduceMotion) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {

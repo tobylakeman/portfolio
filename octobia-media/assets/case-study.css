@@ -196,6 +196,35 @@ nav.primary a:hover::after { width: 100%; }
 }
 .cs-imgbox span::before { content: '\25A2  '; }
 
+/* ---------- case studies hub ---------- */
+.hub-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+@media (min-width: 760px) { .hub-grid { grid-template-columns: repeat(2, 1fr); } }
+.hub-card {
+  display: block;
+  background: var(--ink-2);
+  border-radius: 14px;
+  padding: 2rem 1.75rem 1.75rem;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.25s cubic-bezier(.2,.8,.2,1), box-shadow 0.25s ease;
+}
+.hub-card:hover { transform: translateY(-4px); box-shadow: 0 20px 44px rgba(0,0,0,0.4); }
+.hub-card .cs-num { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--mute-on-ink); }
+.hub-card h2 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); text-transform: none; margin: 0.6rem 0 0; }
+.hub-card p { margin: 0.75rem 0 0; font-size: 0.95rem; color: var(--mute-on-ink); max-width: 50ch; }
+.hub-card .cs-tags { margin-top: 1.25rem; }
+.hub-card .view-case {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-top: 1.25rem;
+  opacity: 0.85;
+}
+.hub-card:hover .view-case { opacity: 1; }
+
 /* ---------- pager ---------- */
 .cs-pager {
   border-top: 1px solid var(--line-on-ink);

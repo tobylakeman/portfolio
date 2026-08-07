@@ -164,20 +164,6 @@
   section.on-signal { background: var(--signal); color: var(--ink); }
   section.on-paper { background: var(--paper); color: var(--ink); }
 
-  .thread {
-    position: absolute;
-    top: 0;
-    left: 1.25rem;
-    width: 190px;
-    height: 100%;
-    pointer-events: none;
-    z-index: 5;
-    display: none;
-  }
-  @media (min-width: 900px) { .thread { display: block; } }
-  .thread svg { position: absolute; top: 0; left: 0; overflow: visible; }
-  .trace-line { fill: none; stroke: var(--accent-purple); stroke-width: 1.4; opacity: 0.16; }
-
   .wrap {
     position: relative;
     z-index: 1;
@@ -508,46 +494,6 @@
   }
 </style>
 
-<div class="thread" id="thread" aria-hidden="true">
-  <svg id="threadSvg" width="190" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <symbol id="tentacleArt" viewBox="0 0 260.5 1695.2">
-        <g fill="none" stroke="var(--accent-purple)" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M130,4 C130,142 185,142 185,280" stroke-width="30"/>
-          <path d="M185,280 C185,420 70,420 70,560" stroke-width="25"/>
-          <path d="M70,560 C70,700 170,700 170,840" stroke-width="20"/>
-          <path d="M170,840 C170,980 80,980 80,1120" stroke-width="16"/>
-          <path d="M80,1120 C80,1260 160,1260 160,1400" stroke-width="12"/>
-          <path d="M160,1400 C160,1545 125,1545 125,1690" stroke-width="8"/>
-        </g>
-        <g fill="none" stroke="var(--signal)" stroke-width="1.6">
-          <circle cx="152" cy="90" r="5"/>
-          <circle cx="162" cy="205" r="4.5"/>
-          <circle cx="150" cy="345" r="4.5"/>
-          <circle cx="98" cy="480" r="4"/>
-          <circle cx="105" cy="615" r="4"/>
-          <circle cx="150" cy="765" r="3.5"/>
-          <circle cx="148" cy="895" r="3.5"/>
-          <circle cx="100" cy="1040" r="3"/>
-          <circle cx="97" cy="1180" r="3"/>
-          <circle cx="142" cy="1325" r="2.5"/>
-          <circle cx="150" cy="1435" r="2.5"/>
-          <circle cx="130" cy="1585" r="2"/>
-        </g>
-      </symbol>
-      <linearGradient id="tentacleFade" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="0">
-        <stop offset="0" stop-color="#fff"></stop>
-        <stop id="tentacleFadeStop" offset="0.9" stop-color="#fff"></stop>
-        <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
-      </linearGradient>
-      <mask id="tentacleMask" maskUnits="userSpaceOnUse" x="-1000" y="-1000" width="3000" height="1000000">
-        <rect id="tentacleClipRect" x="0" y="0" width="190" height="0" fill="url(#tentacleFade)"></rect>
-      </mask>
-    </defs>
-    <g id="tentacleGroup" mask="url(#tentacleMask)"></g>
-    <path id="traceLine" class="trace-line"></path>
-  </svg>
-</div>
 
 <header>
   <a class="wordmark" href="#top">
@@ -827,106 +773,6 @@
   } else {
     rows.forEach(function (row) { row.classList.add('in'); });
   }
-
-  // ---------- Octopus tentacle: bold line-art artwork confined to the hero, ----------
-  // ---------- fading into an abstract, low-opacity line trace for the rest of the page ----------
-  (function () {
-    var svg = document.getElementById('threadSvg');
-    var group = document.getElementById('tentacleGroup');
-    var clipRect = document.getElementById('tentacleClipRect');
-    var fadeGradient = document.getElementById('tentacleFade');
-    var fadeStop = document.getElementById('tentacleFadeStop');
-    var traceEl = document.getElementById('traceLine');
-    var heroEl = document.querySelector('.hero');
-    var W = 190;
-    var vbW = 260.5, vbH = 1695.2;
-    var unitH = W * (vbH / vbW);
-    var docH = 0;
-    var illusH = 0;
-    var fadeH = 120;
-    var traceLen = 0;
-
-    function setReveal(h) {
-      clipRect.setAttribute('height', String(h));
-      fadeGradient.setAttribute('y2', String(h));
-      var offset = h > 0 ? Math.max(0, Math.min(0.95, (h - fadeH) / h)) : 0;
-      fadeStop.setAttribute('offset', String(offset));
-    }
-
-    function traceD(startY, endY) {
-      var cx = W / 2, amp = 42, step = 240;
-      var d = 'M' + cx + ',' + startY.toFixed(1);
-      var y = startY, dir = 1;
-      while (y < endY) {
-        var yA = y + step * 0.33, yB = y + step * 0.66, yEnd = y + step;
-        var xMid = cx + dir * amp;
-        d += ' C' + cx + ',' + yA.toFixed(1) + ' ' + xMid.toFixed(1) + ',' + yA.toFixed(1) + ' ' + xMid.toFixed(1) + ',' + ((yA + yB) / 2).toFixed(1);
-        d += ' C' + xMid.toFixed(1) + ',' + yB.toFixed(1) + ' ' + cx + ',' + yB.toFixed(1) + ' ' + cx + ',' + yEnd.toFixed(1);
-        y = yEnd;
-        dir *= -1;
-      }
-      return d;
-    }
-
-    function build() {
-      docH = document.documentElement.scrollHeight;
-      illusH = heroEl ? heroEl.offsetHeight : Math.min(docH, window.innerHeight);
-      svg.setAttribute('height', docH);
-      clipRect.setAttribute('width', String(W));
-
-      var repeats = Math.max(1, Math.ceil(illusH / unitH));
-      group.innerHTML = '';
-      for (var i = 0; i < repeats; i++) {
-        var use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-        use.setAttribute('href', '#tentacleArt');
-        use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#tentacleArt');
-        use.setAttribute('x', '0');
-        use.setAttribute('y', String(i * unitH));
-        use.setAttribute('width', String(W));
-        use.setAttribute('height', String(unitH));
-        group.appendChild(use);
-      }
-
-      if (docH > illusH) {
-        traceEl.setAttribute('d', traceD(illusH, docH));
-        traceLen = traceEl.getTotalLength();
-        traceEl.style.strokeDasharray = String(traceLen);
-      } else {
-        traceEl.removeAttribute('d');
-        traceLen = 0;
-      }
-    }
-    build();
-
-    if (reduceMotion) {
-      setReveal(illusH);
-      if (traceEl) traceEl.style.strokeDashoffset = '0';
-      window.addEventListener('resize', function () { build(); setReveal(illusH); });
-    } else {
-      var ticking = false;
-      function onScroll() {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(function () {
-          var heroScrollable = Math.max(1, illusH - window.innerHeight);
-          var heroProgress = Math.min(1, Math.max(0, window.scrollY / heroScrollable));
-          var minReveal = Math.min(illusH, Math.max(320, window.innerHeight * 0.95));
-          setReveal(minReveal + (illusH - minReveal) * heroProgress);
-
-          if (traceLen > 0) {
-            var traceStart = Math.max(0, illusH - window.innerHeight);
-            var traceEnd = Math.max(traceStart + 1, docH - window.innerHeight);
-            var traceProgress = Math.min(1, Math.max(0, (window.scrollY - traceStart) / (traceEnd - traceStart)));
-            traceEl.style.strokeDashoffset = String(traceLen * (1 - traceProgress));
-          }
-          ticking = false;
-        });
-      }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', function () { build(); onScroll(); });
-      onScroll();
-    }
-  })();
 
   // ---------- Magnetic hover: nav links, CTA links, and the preview-build tag nudge toward the cursor ----------
   (function () {

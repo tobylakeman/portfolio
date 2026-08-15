@@ -34,14 +34,19 @@
   <path fill="#f5ea14" d="M978,24.9h11.2v19.5c-5.3,3.7-13.7,6.4-20.7,6.4-15.2,0-26.5-10.9-26.5-25.3S953.7.2,969.4.2s15.3,2.8,20.4,7.4l-7.4,9.1c-3.5-3.3-8.6-5.5-13.1-5.5-8,0-14,6.2-14,14.2s6.1,14.3,14.2,14.3,5.6-.8,8.6-2.3v-12.5Z"/>
   <path fill="#f5ea14" d="M1006.4.6l22.5,29.9V.6h12v49.6h-11.3l-22.5-29.7v29.7h-12.1V.6h11.4Z"/></svg>
   </a>
-  <nav class="primary">
+  <nav class="primary" id="navPrimary">
     <a href="../index.html#studio">Studio</a>
     <a href="../index.html#services">Services</a>
     <a href="index.html">Case Studies</a>
     <a href="../index.html#approach">Approach</a>
     <a href="../index.html#contact">Contact</a>
   </nav>
-  <a class="tally" href="index.html">&larr; All Case Studies</a>
+  <div class="header-right">
+    <a class="tally" href="index.html">&larr; All Case Studies</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navPrimary">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
 
 <main>
@@ -88,5 +93,22 @@
   <span>&copy; 2026 Octobia Multimedia Design</span>
   <span>Design preview &middot; not yet live</span>
 </footer>
+<script>
+  (function () {
+    var toggle = document.getElementById('menuToggle');
+    var nav = document.getElementById('navPrimary');
+    if (!toggle || !nav) return;
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    nav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
 </body>
 </html>

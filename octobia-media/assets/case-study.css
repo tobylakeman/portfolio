@@ -245,6 +245,21 @@ nav.primary a:hover::after { width: 100%; }
   opacity: 0.7;
 }
 .cs-imgbox span::before { content: '\25A2  '; }
+.cs-imgbox img {
+  flex: 1 1 7rem;
+  width: 100%;
+  height: 9rem;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+.cs-imgbox img:only-child {
+  flex-basis: 100%;
+  height: auto;
+  max-height: 34rem;
+  object-fit: contain;
+  background: var(--ink);
+}
 
 /* ---------- case studies hub ---------- */
 .hub-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
@@ -259,6 +274,14 @@ nav.primary a:hover::after { width: 100%; }
   transition: transform 0.25s cubic-bezier(.2,.8,.2,1), box-shadow 0.25s ease;
 }
 .hub-card:hover { transform: translateY(-4px); box-shadow: 0 20px 44px rgba(0,0,0,0.4); }
+.hub-thumb {
+  display: block;
+  width: calc(100% + 3.5rem);
+  height: 12rem;
+  object-fit: cover;
+  margin: -2rem -1.75rem 1.25rem;
+  border-radius: 14px 14px 0 0;
+}
 .hub-card .cs-num { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--mute-on-ink); }
 .hub-card h2 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); text-transform: none; margin: 0.6rem 0 0; }
 .hub-card p { margin: 0.75rem 0 0; font-size: 0.95rem; color: var(--mute-on-ink); max-width: 50ch; }

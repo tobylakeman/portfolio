@@ -380,7 +380,7 @@
   }
   .carousel-stage {
     position: relative;
-    height: clamp(320px, 42vw, 400px);
+    height: clamp(320px, 46vw, 460px);
     perspective: 1400px;
     touch-action: pan-y;
     overflow: hidden;
@@ -396,7 +396,7 @@
     position: absolute;
     top: 50%; left: 50%;
     width: min(72vw, 440px);
-    height: min(76%, 300px);
+    height: min(84%, 380px);
     background: var(--ink-2);
     border: 1px solid var(--line-on-ink);
     padding: clamp(1.5rem, 3vw, 2.25rem);
@@ -419,6 +419,14 @@
     opacity: 0.85;
   }
   .reel-card:hover .view-case { opacity: 1; }
+  .reel-thumb {
+    width: 100%;
+    height: 9rem;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
   .reel-card .tc {
     font-family: var(--mono);
     font-size: 0.68rem;
@@ -714,12 +722,14 @@
         <div class="carousel-stage" id="carouselStage">
           <div class="carousel-ring" id="carouselRing">
             <a class="reel-card" href="work/kings-of-neon.html">
+              <img class="reel-thumb" src="assets/hi_edm/thumb_01.jpg" alt="Kings of Neon" loading="lazy">
               <span class="tc">SIGNAGE CATALOGUE &middot; CAMPAIGNS</span>
               <h3>Kings of Neon</h3>
               <p>A 37-page signage catalogue, an apparel range, and a ten-part EOFY email and promo campaign for a global neon signage brand.</p>
               <span class="view-case">View case study &rarr;</span>
             </a>
             <a class="reel-card" href="work/rostered-on.html">
+              <img class="reel-thumb" src="assets/rostered/web.jpg" alt="Rostered On with Harry Callinan" loading="lazy">
               <span class="tc">PODCAST &middot; CONTENT</span>
               <h3>Rostered On with Harry Callinan</h3>
               <p>Producer and content creator for a hospitality podcast: brand, episode graphics, and social and web presence across three seasons.</p>
@@ -732,6 +742,7 @@
               <span class="view-case">View case study &rarr;</span>
             </a>
             <a class="reel-card" href="work/omnia-wheel.html">
+              <img class="reel-thumb" src="assets/omnia/cover-01.jpg" alt="Omnia Wheel" loading="lazy">
               <span class="tc">BROCHURE &middot; PRODUCT PHOTOGRAPHY</span>
               <h3>Omnia Wheel</h3>
               <p>A 12-page product brochure for an Australian robotics manufacturer, with art direction across photography and 3D renders.</p>

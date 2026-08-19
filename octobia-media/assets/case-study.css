@@ -236,11 +236,21 @@ nav.primary a:hover::after { width: 100%; }
   .cs-imgbox:not(:has(img:only-child)) { column-count: 2; }
 }
 @media (min-width: 560px) {
-  .cs-imgbox.cols-3 { column-count: 2 !important; }
+  .cs-imgbox.cols-3 { column-count: 2 !important; column-gap: 1.4rem; }
 }
 @media (min-width: 860px) {
   .cs-imgbox.cols-3 { column-count: 3 !important; }
 }
+.cs-imgbox.cols-3 img,
+.cs-imgbox.cols-3 .cs-pair {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.4rem;
+}
+.cs-imgbox.cols-3 img:only-child { margin-bottom: 0; }
+.cs-imgbox.cols-3 .cs-pair img { margin-bottom: 0.9rem; }
+.cs-imgbox.cols-3 .cs-pair img:last-child { margin-bottom: 0; }
 .cs-imgbox span {
   display: block;
   font-family: var(--mono);

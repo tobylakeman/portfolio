@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Artifact"
+      "Artifact",
+      "Bash(git fetch *)",
+      "mcp__github__pull_request_read"
     ],
     "defaultMode": "bypassPermissions"
   },

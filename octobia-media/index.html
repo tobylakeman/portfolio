@@ -560,8 +560,46 @@
   @media (prefers-reduced-motion: reduce) {
     .fade-in { opacity: 1; transform: none; transition: none; }
   }
+
+  .intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--ink);
+    display: flex;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.8s ease;
+  }
+  .intro-overlay.hide { opacity: 0; pointer-events: none; }
+  .intro-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (prefers-reduced-motion: reduce) {
+    .intro-overlay { display: none; }
+  }
 </style>
 
+<div class="intro-overlay" id="introOverlay">
+  <video class="intro-video" id="introVideo" autoplay muted playsinline preload="auto">
+    <source src="assets/video/tentacle-opener.webm" type="video/webm">
+    <source src="assets/video/tentacle-opener.mp4" type="video/mp4">
+  </video>
+</div>
+<script>
+  (function () {
+    var overlay = document.getElementById('introOverlay');
+    var video = document.getElementById('introVideo');
+    if (!overlay || !video) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { overlay.remove(); return; }
+    function dismiss() {
+      overlay.classList.add('hide');
+      overlay.addEventListener('transitionend', function () { overlay.remove(); }, { once: true });
+    }
+    video.addEventListener('ended', dismiss);
+    video.addEventListener('error', dismiss);
+    overlay.addEventListener('click', dismiss);
+    setTimeout(dismiss, 12000);
+  })();
+</script>
 
 <header>
   <a class="wordmark" href="#top">

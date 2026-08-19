@@ -301,6 +301,7 @@ nav.primary a:hover::after { width: 100%; }
   width: calc(100% + 3.5rem);
   height: 12rem;
   object-fit: cover;
+  object-position: top;
   margin: -2rem -1.75rem 1.25rem;
   border-radius: 14px 14px 0 0;
 }

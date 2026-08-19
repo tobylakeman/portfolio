@@ -209,7 +209,7 @@ nav.primary a:hover::after { width: 100%; }
   border-radius: 12px;
   padding: 1.5rem 1.5rem 1.25rem;
 }
-.cs-project:has(.cs-imgbox.cols-4) { grid-column: 1 / -1; }
+.cs-project:has(.cs-imgbox.cols-3) { grid-column: 1 / -1; }
 .cs-project .cs-num {
   font-family: var(--mono);
   font-size: 0.68rem;
@@ -236,10 +236,10 @@ nav.primary a:hover::after { width: 100%; }
   .cs-imgbox:not(:has(img:only-child)) { column-count: 2; }
 }
 @media (min-width: 560px) {
-  .cs-imgbox.cols-4 { column-count: 3 !important; }
+  .cs-imgbox.cols-3 { column-count: 2 !important; }
 }
 @media (min-width: 860px) {
-  .cs-imgbox.cols-4 { column-count: 4 !important; }
+  .cs-imgbox.cols-3 { column-count: 3 !important; }
 }
 .cs-imgbox span {
   display: block;
@@ -266,6 +266,12 @@ nav.primary a:hover::after { width: 100%; }
   background: var(--ink);
 }
 .cs-imgbox img:only-child { margin-bottom: 0; }
+.cs-pair {
+  break-inside: avoid;
+  margin-bottom: 0.6rem;
+}
+.cs-pair img { margin-bottom: 0.6rem; }
+.cs-pair img:last-child { margin-bottom: 0; }
 
 /* ---------- case studies hub ---------- */
 .hub-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }

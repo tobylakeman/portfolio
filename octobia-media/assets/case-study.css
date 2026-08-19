@@ -209,6 +209,7 @@ nav.primary a:hover::after { width: 100%; }
   border-radius: 12px;
   padding: 1.5rem 1.5rem 1.25rem;
 }
+.cs-project:has(.cs-imgbox.cols-4) { grid-column: 1 / -1; }
 .cs-project .cs-num {
   font-family: var(--mono);
   font-size: 0.68rem;
@@ -233,6 +234,12 @@ nav.primary a:hover::after { width: 100%; }
 }
 @media (min-width: 420px) {
   .cs-imgbox:not(:has(img:only-child)) { column-count: 2; }
+}
+@media (min-width: 560px) {
+  .cs-imgbox.cols-4 { column-count: 3 !important; }
+}
+@media (min-width: 860px) {
+  .cs-imgbox.cols-4 { column-count: 4 !important; }
 }
 .cs-imgbox span {
   display: block;

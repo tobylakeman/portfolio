@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://octobiamedia.com.au/sitemap.xml

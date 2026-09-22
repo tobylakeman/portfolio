@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Photography Portfolio | Toby Lakeman, Newcastle NSW</title>
+
+<meta name="description" content="Photography portfolio by Toby Lakeman, Newcastle NSW. Product, lifestyle, people, portrait and food photography for brands across the Hunter region and Australia-wide." />
+<meta name="keywords" content="photographer Newcastle, product photography Newcastle NSW, food photography Newcastle, portrait photographer Hunter region, commercial photography Newcastle, Toby Lakeman, Octobia Media" />
+<meta name="author" content="Toby Lakeman" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://octobiamedia.com.au/photography.html" />
+<meta name="geo.region" content="AU-NSW" />
+<meta name="geo.placename" content="Newcastle, New South Wales" />
+
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="apple-touch-icon" href="assets/favicon.svg" />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://octobiamedia.com.au/photography.html" />
+<meta property="og:title" content="Photography Portfolio, Toby Lakeman" />
+<meta property="og:description" content="Product, lifestyle, people, portrait and food photography for brands across Newcastle and the Hunter region." />
+<meta property="og:image" content="https://octobiamedia.com.au/assets/photography/plant-glider-02.jpg" /><meta property="og:locale" content="en_AU" />
+<meta property="og:site_name" content="Octobia Media" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Photography Portfolio, Toby Lakeman" />
+<meta name="twitter:description" content="Product, lifestyle, people, portrait and food photography, Newcastle NSW." />
+<meta name="twitter:image" content="https://octobiamedia.com.au/assets/photography/plant-glider-02.jpg" />
+
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#0ADDD3" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0ADDD3" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  "name": "Toby Lakeman Photography Portfolio",
+  "url": "https://octobiamedia.com.au/photography.html",
+  "description": "Product, lifestyle, people, portrait and food photography by Toby Lakeman, Newcastle NSW.",
+  "author": { "@type": "Person", "name": "Toby Lakeman" },
+  "isPartOf": { "@type": "WebSite", "name": "Octobia Media", "url": "https://octobiamedia.com.au/" }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="portfolio.css" />
+<style>
+/* ---------- Photography page ---------- */
+.photo-hero{position:relative;padding:150px 0 56px;background:var(--paper);overflow:hidden}
+.photo-hero .inner{position:relative;z-index:2;display:block}
+.photo-hero .section-lead{margin-top:28px;max-width:640px}
+@media (max-width:1100px){.photo-hero{padding-top:120px}}
+.photo-hero h1{font-family:var(--font-display);font-weight:400;font-size:clamp(40px,6.4vw,104px);line-height:.9;letter-spacing:-.015em;text-transform:uppercase;color:var(--accent);margin:16px 0 0;white-space:nowrap}
+.photo-hero h1 .br{display:none}
+@media (max-width:760px){.photo-hero h1{white-space:normal}.photo-hero h1 .br{display:block}}
+.photo-hero h1 .ac{color:var(--accent)}
+
+.photo-sec{padding:70px 0 0;background:var(--paper)}
+.photo-sec:first-of-type{padding-top:56px}
+.photo-sec:last-of-type{padding-bottom:90px}
+.photo-head{display:block;margin-bottom:26px}
+.photo-head .section-title{margin:12px 0 0;font-size:clamp(24px,3vw,44px)}
+/* Explainer text sits under its row of photos, with room before the next group */
+.photo-note{margin:26px 0 0;max-width:760px;padding-bottom:54px;border-bottom:1px solid var(--line)}
+.photo-sec:last-of-type .photo-note{border-bottom:0;padding-bottom:0}
+
+/* Uniform grid — equal tiles, cropped to a consistent 4:5 so mixed
+   portrait/landscape frames line up instead of stair-stepping */
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+@media (max-width:620px){.photo-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}}
+.shot{position:relative;aspect-ratio:4/5;border-radius:6px;overflow:hidden;background:var(--paper-3);cursor:zoom-in;transition:transform 360ms cubic-bezier(.22,1,.36,1),box-shadow 360ms ease}
+.shot:hover{transform:translateY(-4px);box-shadow:0 20px 40px -20px rgba(0,0,0,.5);z-index:2}
+.shot img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 700ms cubic-bezier(.22,1,.36,1)}
+.shot:hover img{transform:scale(1.05)}
+.shot .zoom{position:absolute;inset:auto 0 0 0;padding:10px 12px;display:flex;align-items:center;gap:6px;background:linear-gradient(0deg,rgba(0,0,0,.66) 0%,rgba(0,0,0,0) 100%);color:#fff;font-family:var(--font-body);font-weight:700;font-size:9px;letter-spacing:.16em;text-transform:uppercase;opacity:0;transition:opacity 280ms ease}
+.shot:hover .zoom{opacity:1}
+
+/* Lightbox — near full-bleed so the frame fills the screen */
+.pl{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;background:rgba(6,6,8,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:0}
+.pl.open{display:flex}
+/* Enlarged frames fill the viewport, but never stretch more than 1.5x beyond
+   their real pixels — past that an upscale just looks soft. Small source
+   frames therefore sit smaller on screen rather than going mushy. */
+.pl img{width:auto;height:auto;max-width:98vw;max-height:94vh;object-fit:contain;display:block;border-radius:2px}
+.pl-cap{position:fixed;left:0;right:0;bottom:14px;text-align:center;font-family:var(--font-body);font-weight:700;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--aqua);text-shadow:0 2px 12px rgba(0,0,0,.9);padding:0 20px}
+.pl-btn{position:fixed;width:52px;height:52px;border-radius:50%;background:var(--aqua);color:#0A0A0A;border:0;cursor:pointer;display:grid;place-items:center;transition:transform 180ms ease,background 200ms ease;box-shadow:0 10px 32px -8px rgba(0,0,0,.7)}
+.pl-btn:hover{background:#fff;transform:scale(1.06)}
+.pl-close{top:20px;right:20px;font-size:25px;font-weight:700}
+.pl-close:hover{transform:rotate(90deg) scale(1.06)}
+.pl-prev{left:20px;top:50%;margin-top:-26px}
+.pl-next{right:20px;top:50%;margin-top:-26px}
+@media (max-width:720px){.pl-btn{width:44px;height:44px}.pl-prev{left:8px;margin-top:-22px}.pl-next{right:8px;margin-top:-22px}.pl img{max-height:88vh}}
+body.pl-open{overflow:hidden}
+a{color:var(--accent)}
+a:hover{color:var(--aqua-dark)}
+</style>
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="brand">Toby Lakeman<span class="dot">.</span></a>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="index.html#reel">Reel</a>
+    <a href="photography.html" aria-current="page">Photography</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</nav>
+
+<!-- ============== HEADER ============== -->
+<header class="photo-hero" id="top">
+  <div class="wrap">
+    <div class="inner">
+      <span class="eyebrow">Behind the lens</span>
+      <h1>Photo<span class="br"></span>graphy.</h1>
+      <p class="section-lead">Product, lifestyle, people and food, shot on location and in studio for brands across Newcastle and the Hunter. Click any frame to enlarge.</p>
+    </div>
+  </div>
+</header>
+
+<!-- ============== OMNIA PLANT GLIDER ============== -->
+<section class="photo-sec" id="plant-glider">
+  <div class="wrap">
+    <div class="photo-head">
+      <div>
+        <span class="eyebrow">Product &amp; Lifestyle</span>
+        <h2 class="section-title">Omnia<br/>Plant Glider.</h2>
+      </div>
+    </div>
+    <div class="photo-grid">
+      <div class="shot"><img src="assets/photography/plant-glider-02.jpg" alt="Omnia Plant Glider beneath potted plants on a paved patio" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/plant-glider-10.jpg" alt="Black Omnia Plant Glider beside a textured pot in sunlight" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/plant-glider-01.jpg" alt="Terracotta pot with citrus plant on a poolside terrace" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/plant-glider-03.jpg" alt="Omnia Plant Glider product detail" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/plant-glider-08.jpg" alt="Family beside a planter on a poolside deck" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/plant-glider-04.jpg" alt="Omnia Plant Glider in a garden setting" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/plant-glider-05.jpg" alt="Planter and glider on a stone patio" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/plant-glider-09.jpg" alt="Plant Glider lifestyle shot" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/plant-glider-06.jpg" alt="Omnia Plant Glider close detail" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/plant-glider-11.jpg" alt="Plant Glider in use outdoors" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/plant-glider-07.jpg" alt="Plant Glider with garden planting" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/plant-glider-12.jpg" alt="Plant Glider product and setting" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+    </div>
+    <p class="section-lead photo-note">Shot on location across homes and gardens. The brief was to show a technical product doing something simple, moving a heavy pot without lifting it, so the photography had to sit the hardware naturally into real spaces.</p>
+  </div>
+</section>
+
+<!-- ============== OMNIA PEOPLE & PRODUCTS ============== -->
+<section class="photo-sec" id="omnia-people">
+  <div class="wrap">
+    <div class="photo-head">
+      <div>
+        <span class="eyebrow">People &amp; Manufacturing</span>
+        <h2 class="section-title">Omnia people<br/>&amp; products.</h2>
+      </div>
+    </div>
+    <div class="photo-grid">
+      <div class="shot"><img src="assets/photography/omnia-05.jpg" alt="Omnia multi-directional wheels, studio render" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/omnia-07.jpg" alt="Worker operating machinery in the Omnia workshop" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/omnia-01.jpg" alt="Omnia team member at work" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/omnia-02.jpg" alt="Omnia manufacturing detail" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/omnia-08.jpg" alt="Omnia workshop process shot" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/omnia-03.jpg" alt="Omnia product detail" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/omnia-09.jpg" alt="Omnia people at work" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/omnia-04.jpg" alt="Omnia component close up" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/omnia-10.jpg" alt="Omnia workshop environment" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/omnia-06.jpg" alt="Omnia product in context" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/omnia-11.jpg" alt="Omnia team and equipment" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+    </div>
+    <p class="section-lead photo-note">On the factory floor and in the field. Documenting the team who build multi-directional wheels, alongside product and render work used across web, print and paid campaigns.</p>
+  </div>
+</section>
+
+<!-- ============== COOKING AND FOOD ============== -->
+<section class="photo-sec" id="food">
+  <div class="wrap">
+    <div class="photo-head">
+      <div>
+        <span class="eyebrow">Hospitality</span>
+        <h2 class="section-title">Cooking<br/>&amp; food.</h2>
+      </div>
+    </div>
+    <div class="photo-grid">
+      <div class="shot"><img src="assets/photography/food-02.jpg" alt="Crab toast with avocado on a dark plate" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/food-01.jpg" alt="Toasted sandwich with relish on a cafe table" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/food-03.jpg" alt="Plated dish in natural light" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/food-07.jpg" alt="Food photography, cafe service" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/food-04.jpg" alt="Dish detail" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/food-08.jpg" alt="Plated meal on a timber table" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/food-05.jpg" alt="Food styling detail" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/food-09.jpg" alt="Woodfired cooking" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/food-06.jpg" alt="Plated dish overhead" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/food-10.jpg" alt="Food and produce detail" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+    </div>
+    <p class="section-lead photo-note">Plates shot where they are served, in natural light, on the table. Work from cafe and catering clients including ongoing shoots with chef Harry Callinan.</p>
+  </div>
+</section>
+
+<!-- ============== PORTRAITS ============== -->
+<section class="photo-sec" id="portraits">
+  <div class="wrap">
+    <div class="photo-head">
+      <div>
+        <span class="eyebrow">People</span>
+        <h2 class="section-title">Portraits.</h2>
+      </div>
+    </div>
+    <div class="photo-grid">
+      <div class="shot"><img src="assets/photography/portrait-01.jpg" alt="Black and white portrait of a woman reading by a window" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/portrait-02.jpg" alt="Black and white portrait of a child in a pirate costume" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/portrait-03.jpg" alt="Black and white portrait" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/portrait-04.jpg" alt="Portrait in available light" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/portrait-05.jpg" alt="Candid portrait" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+      <div class="shot"><img src="assets/photography/portrait-06.jpg" alt="Portrait study" loading="lazy" /><span class="zoom">Click to enlarge</span></div>
+    </div>
+    <p class="section-lead photo-note">Available light, mostly black and white. Quiet moments rather than posed ones, shot close and without fuss.</p>
+  </div>
+</section>
+
+<!-- ============== CONTACT CTA ============== -->
+<section class="contact-block" id="contact">
+  <div class="wrap">
+    <div class="contact-inner">
+      <span class="eyebrow contact-eyebrow">Get in touch</span>
+      <h2 class="contact-h">Let's <span class="ac">capture</span><br/>your brand together.</h2>
+      <p class="section-lead" style="margin:0 auto;color:#BFB9AE">Product, people, food or on location. Drop me a line and we can talk it through.</p>
+      <div class="contact-rows">
+        <a class="contact-row" href="tel:+61427061979">
+          <span class="lbl">Phone</span>
+          +61 427 061 979
+        </a>
+        <a class="contact-row" href="mailto:tobylakeman@gmail.com">
+          <span class="lbl">Email</span>
+          tobylakeman@gmail.com
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="footer">
+  <span class="brand">Toby Lakeman</span>
+  <span>© 2026 · Multimedia Designer · Content Creator · Merewether NSW</span>
+</footer>
+
+<!-- ============== LIGHTBOX ============== -->
+<div class="pl" id="pl" aria-hidden="true">
+  <button class="pl-btn pl-close" id="plClose" aria-label="Close">×</button>
+  <button class="pl-btn pl-prev" id="plPrev" aria-label="Previous">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button class="pl-btn pl-next" id="plNext" aria-label="Next">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <img id="plImg" alt="" />
+  <div class="pl-cap" id="plCap"></div>
+</div>
+
+<script>
+(function () {
+  /* Theme toggle — the photography page always opens black, so the images
+     lead. The toggle still works from there. */
+  var root = document.documentElement;
+  var theme = 'dark';
+  root.setAttribute('data-theme', theme);
+  document.getElementById('themeToggle').addEventListener('click', function () {
+    theme = theme === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', theme);
+    try { localStorage.setItem('tl-theme', theme); } catch (e) {}
+  });
+
+  /* Nav blur on scroll */
+  var nav = document.getElementById('nav');
+  function onScroll() { nav.classList.toggle('scrolled', window.scrollY > 40); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* Lightbox */
+  var shots = [].slice.call(document.querySelectorAll('.shot img'));
+  var pl = document.getElementById('pl');
+  var plImg = document.getElementById('plImg');
+  var plCap = document.getElementById('plCap');
+  var i = 0;
+
+  function show(n) {
+    i = (n + shots.length) % shots.length;
+    plImg.src = shots[i].src;
+    plImg.alt = shots[i].alt;
+    plCap.textContent = shots[i].alt + '  ·  ' + (i + 1) + ' / ' + shots.length;
+    sizeToSource();
+  }
+
+  /* Cap the enlargement at 1.5x the image's real pixels. Filling the screen
+     with a 400px source only makes it look soft, so low-res frames display
+     smaller and stay sharp. */
+  var MAX_UPSCALE = 1.5;
+  function sizeToSource() {
+    function apply() {
+      var nw = plImg.naturalWidth, nh = plImg.naturalHeight;
+      if (!nw || !nh) return;
+      var capW = Math.round(nw * MAX_UPSCALE);
+      var capH = Math.round(nh * MAX_UPSCALE);
+      plImg.style.maxWidth = 'min(98vw, ' + capW + 'px)';
+      plImg.style.maxHeight = 'min(94vh, ' + capH + 'px)';
+    }
+    if (plImg.complete) apply();
+    else plImg.addEventListener('load', apply, { once: true });
+  }
+  function open(n) {
+    show(n);
+    pl.classList.add('open');
+    pl.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pl-open');
+  }
+  function close() {
+    pl.classList.remove('open');
+    pl.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pl-open');
+  }
+
+  shots.forEach(function (img, n) {
+    img.parentElement.addEventListener('click', function () { open(n); });
+  });
+  document.getElementById('plClose').addEventListener('click', close);
+  document.getElementById('plPrev').addEventListener('click', function (e) { e.stopPropagation(); show(i - 1); });
+  document.getElementById('plNext').addEventListener('click', function (e) { e.stopPropagation(); show(i + 1); });
+  pl.addEventListener('click', function (e) { if (e.target === pl || e.target === plImg) close(); });
+  window.addEventListener('keydown', function (e) {
+    if (!pl.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(i - 1);
+    if (e.key === 'ArrowRight') show(i + 1);
+  });
+})();
+</script>
+
+</body>
+</html>

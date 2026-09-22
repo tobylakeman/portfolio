@@ -273,7 +273,11 @@ function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
 
   useEffect(() => {
-    document.body.dataset.theme = t.theme || 'light';
+    // Set on <html> (not <body>) so the page is themed before first paint,
+    // and default to dark — light is opt-in via the toggle.
+    const mode = t.theme || 'dark';
+    document.documentElement.dataset.theme = mode;
+    document.body.dataset.theme = mode;
   }, [t.theme]);
 
   useEffect(() => {

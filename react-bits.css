@@ -1,0 +1,105 @@
+/* =============================================================
+   React Bits (reactbits.dev) — styles for the components wired
+   up in react-bits.jsx. Uses the site's own tokens.
+   ============================================================= */
+
+/* Hold the hero titles hidden until SplitText has split them, so they
+   don't flash in full before animating. The failsafe animation shows
+   them anyway after 2.5s if the scripts never run. */
+.rb-pending .hero-name,
+.rb-pending .photo-hero h1 {
+  visibility: hidden;
+  animation: rb-failsafe 0s 2.5s forwards;
+}
+@keyframes rb-failsafe { to { visibility: visible; } }
+
+/* ---------- SpotlightCard (light layers added to existing cards) ---------- */
+.rb-spotlight {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.spotlight-card__light,
+.spotlight-card__grain,
+.spotlight-card__edge {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.spotlight-card__light,
+.spotlight-card__grain {
+  z-index: -1;
+  opacity: 0;
+}
+.spotlight-card__grain {
+  background-size: 160px 160px;
+  mix-blend-mode: overlay;
+}
+.spotlight-card__edge {
+  z-index: 1;
+  opacity: 0;
+  padding: 1px;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+}
+
+/* ---------- Magnet ---------- */
+.rb-magnet { position: relative; display: inline-block; }
+.rb-magnet__inner { display: inline-block; will-change: transform; }
+
+/* ---------- ShinyText ---------- */
+.shiny-text {
+  position: relative;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- ClickSpark overlay ---------- */
+.rb-click-spark {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* ---------- ScrollVelocity strip ---------- */
+.velocity-block {
+  padding: 104px 0 0;
+  background: var(--paper);
+  overflow: hidden;
+}
+.parallax {
+  position: relative;
+  overflow: hidden;
+}
+.scroller {
+  display: flex;
+  white-space: nowrap;
+}
+.scroller span { flex-shrink: 0; }
+
+.rb-velocity__scroller {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(40px, 7vw, 104px);
+  line-height: 1.08;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.rb-velocity__row + .rb-velocity__row .rb-velocity__scroller { color: var(--aqua); }
+
+@media (max-width: 720px) {
+  .velocity-block { padding-top: 64px; }
+}

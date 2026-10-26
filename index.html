@@ -183,6 +183,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="portfolio.css" />
+<link rel="stylesheet" href="react-bits.css" />
+<script>document.documentElement.classList.add('rb-pending');</script>
 <template id="__bundler_thumbnail">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
     <rect width="200" height="200" fill="#5FC8C7"/>
@@ -711,6 +713,11 @@ Brand identity, print, photography, motion, and everything in between. </span><s
 </section>
 
 <!-- ============== CAPABILITIES ============== -->
+<!-- ============== VELOCITY STRIP (React Bits ScrollVelocity) ============== -->
+<section class="velocity-block" aria-label="Disciplines and tools">
+  <div id="velocityStrip"></div>
+</section>
+
 <section class="cap-block">
   <div class="wrap">
     <div class="section-head">
@@ -853,6 +860,12 @@ They're happy to chat about my work.</p>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 <script type="text/babel" src="app.jsx"></script>
+<!-- React Bits (reactbits.dev): animation libraries, self-hosted -->
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/SplitText.min.js"></script>
+<script src="assets/vendor/framer-motion.min.js"></script>
+<script type="text/babel" src="react-bits.jsx"></script>
 
 </body>
 </html>
